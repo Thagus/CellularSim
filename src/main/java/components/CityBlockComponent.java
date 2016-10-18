@@ -18,11 +18,7 @@ public class CityBlockComponent implements Component {
         this.block = block;
         this.type = type;
         this.block.setFill(Color.WHITE);
-    }
-
-    public CityBlockComponent(int i, int j, BlockType type) {
-        this.type = type;
-        this.block = new Rectangle(i*10, j*10, 10, 10);
-        this.block.setFill(Color.WHITE);
+        this.block.setStroke(Color.BLACK);
+        this.block.setStrokeWidth(1);
     }
 }
