@@ -5,9 +5,13 @@ import components.CityBlockComponent;
 import components.UserComponent;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -26,8 +30,23 @@ public class Main extends Application{
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Cellular simulator");
 
+        VBox layout = new VBox();
+        layout.setSpacing(5);
 
+        layout.getChildren().add(createMenus());
+        layout.getChildren().add(createCanvas());
+
+
+        Scene scene = new Scene(layout, 1280, 720);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+        startTick();
+    }
+
+    private BorderPane createCanvas() {
         BorderPane pane = new BorderPane();
+        pane.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 
         initialize();
         pane.getChildren().addAll(createCityBlocks());
@@ -35,11 +54,20 @@ public class Main extends Application{
         addSystems();
 
 
-        final Scene scene = new Scene(pane, 802, 604, Color.BLACK);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        return pane;
+    }
 
-        startTick();
+    private MenuBar createMenus(){
+        MenuBar menuBar = new MenuBar();
+
+        //File menu
+        Menu menuFile = new Menu("_File");
+
+        MenuItem importMap = new MenuItem("Import map...");
+        menuFile.getItems().add(importMap);
+
+        menuBar.getMenus().add(menuFile);
+        return  menuBar;
     }
 
     private void initialize(){
@@ -66,7 +94,7 @@ public class Main extends Application{
 
         for(int i=0; i<width; i++){
             for(int j=0; j<height; j++){
-                Rectangle rectangle = new Rectangle(i*10+i, j*10+j, 10, 10);
+                Rectangle rectangle = new Rectangle(i*10, j*10, 10, 10);
                 CityBlockComponent cityBlockComponent = new CityBlockComponent(rectangle, CityBlockComponent.BlockType.TRAFFIC);
                 Entity cityBlock = new Entity();
                 cityBlock.add(cityBlockComponent);
