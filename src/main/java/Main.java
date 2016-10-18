@@ -5,14 +5,12 @@ import components.CityBlockComponent;
 import components.UserComponent;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -45,16 +43,16 @@ public class Main extends Application{
     }
 
     private BorderPane createCanvas() {
-        BorderPane pane = new BorderPane();
-        pane.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+        BorderPane simPane = new BorderPane();
+        simPane.setMaxSize(800, 600);
 
         initialize();
-        pane.getChildren().addAll(createCityBlocks());
-        pane.getChildren().addAll(createUsers());
+        simPane.getChildren().addAll(createCityBlocks());
+        simPane.getChildren().addAll(createUsers());
         addSystems();
 
 
-        return pane;
+        return simPane;
     }
 
     private MenuBar createMenus(){
@@ -87,8 +85,8 @@ public class Main extends Application{
     }
 
     private ArrayList<Node> createCityBlocks(){
-        int width = 73;
-        int height = 55;
+        int width = 80;
+        int height = 60;
 
         ArrayList<Node> nodes = new ArrayList<>();
 
