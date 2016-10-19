@@ -38,9 +38,7 @@ public class UserMovementSystem extends IteratingSystem {
         double newXValue, newYValue;
 
         if(userCommitmentComponent.xCommitment!=0){ //We have a current commitment for the X axis
-            System.out.println("We have a X commitment");
             double currX = userComponent.user.getCenterX();
-            System.out.println("CurrX: " + currX);
 
             int direction = (userCommitmentComponent.xCommitment>0)?1:-1;
 
@@ -61,10 +59,7 @@ public class UserMovementSystem extends IteratingSystem {
             userComponent.user.setCenterX(newXValue);
         }
         else if (userCommitmentComponent.yCommitment!=0){   //We have a commitment for Y axis
-            System.out.println("We have a Y commitment");
             double currY = userComponent.user.getCenterY();
-            System.out.println("CurrY: " + currY);
-
 
             int direction = (userCommitmentComponent.yCommitment>0)?1:-1;
 
@@ -85,7 +80,6 @@ public class UserMovementSystem extends IteratingSystem {
             userComponent.user.setCenterY(newYValue);
         }
         else {  //We must make a commitment
-            System.out.println("We have to make a commitment");
             if(rnd.nextBoolean()){  //We move in X
                 if(rnd.nextDouble()>0.2){   //We move to the right
                     userCommitmentComponent.xCommitment = 10;
@@ -93,7 +87,6 @@ public class UserMovementSystem extends IteratingSystem {
                 else{   //We move to the left
                     userCommitmentComponent.xCommitment = -10;
                 }
-                System.out.println("Commitemt: " + userCommitmentComponent.xCommitment);
             }
             else {  //We move in Y
                 if(rnd.nextDouble()>0.2){   //We move down
@@ -102,7 +95,6 @@ public class UserMovementSystem extends IteratingSystem {
                 else{   //We move up
                     userCommitmentComponent.yCommitment = -10;
                 }
-                System.out.println("Commitemt: " + userCommitmentComponent.yCommitment);
             }
         }
 
