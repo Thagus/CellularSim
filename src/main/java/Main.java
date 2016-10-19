@@ -26,6 +26,7 @@ public class Main extends Application{
 
         BorderPane borderPane = new BorderPane();
         borderPane.setCenter(new SimulationView());
+        borderPane.setLeft(createLeftMenu());
 
         layout.getChildren().add(borderPane);
 
@@ -42,16 +43,25 @@ public class Main extends Application{
         Menu menuFile = new Menu("_File");
 
         MenuItem importMap = new MenuItem("Import map...");
-        menuFile.setOnAction(e -> {
-            new SimulationView();
-        });
         menuFile.getItems().add(importMap);
 
         menuBar.getMenus().add(menuFile);
         return  menuBar;
     }
 
+    private VBox createLeftMenu(){
+        VBox leftMenu = new VBox();
+        leftMenu.setAlignment(Pos.TOP_LEFT);
+        leftMenu.setSpacing(10);
+        leftMenu.setPadding(new Insets(10, 7, 5, 7));
+
+        BorderStrokeStyle boderStyle = new BorderStrokeStyle(StrokeType.INSIDE, StrokeLineJoin.MITER, StrokeLineCap.BUTT, 10, 0, null);
+        BorderStroke borderStroke = new BorderStroke(Color.LIGHTGRAY, boderStyle, CornerRadii.EMPTY, new BorderWidths(2), new Insets(2));
+        leftMenu.setBorder(new Border(borderStroke));
+
+        leftMenu.setPrefSize(256, 500);
 
 
-
+        return leftMenu;
+    }
 }
