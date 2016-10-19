@@ -38,7 +38,7 @@ public class UserMovementSystem extends IteratingSystem {
         double newXValue, newYValue;
 
         if(userCommitmentComponent.xCommitment!=0){ //We have a current commitment for the X axis
-            double currX = userComponent.user.getCenterX();
+            double currX = userComponent.userPosition.getCenterX();
 
             int direction = (userCommitmentComponent.xCommitment>0)?1:-1;
 
@@ -56,10 +56,10 @@ public class UserMovementSystem extends IteratingSystem {
                 userCommitmentComponent.xCommitment -= movement;
             }
 
-            userComponent.user.setCenterX(newXValue);
+            userComponent.userPosition.setCenterX(newXValue);
         }
         else if (userCommitmentComponent.yCommitment!=0){   //We have a commitment for Y axis
-            double currY = userComponent.user.getCenterY();
+            double currY = userComponent.userPosition.getCenterY();
 
             int direction = (userCommitmentComponent.yCommitment>0)?1:-1;
 
@@ -77,7 +77,7 @@ public class UserMovementSystem extends IteratingSystem {
                 userCommitmentComponent.yCommitment = newCommitment;
             }
 
-            userComponent.user.setCenterY(newYValue);
+            userComponent.userPosition.setCenterY(newYValue);
         }
         else {  //We must make a commitment
             if(rnd.nextBoolean()){  //We move in X
@@ -99,21 +99,21 @@ public class UserMovementSystem extends IteratingSystem {
         }
 
 
-        if(userComponent.user.getCenterX()<5){
-            userComponent.user.setCenterX(5);
+        if(userComponent.userPosition.getCenterX()<5){
+            userComponent.userPosition.setCenterX(5);
             userCommitmentComponent.xCommitment = 0;
         }
-        else if(userComponent.user.getCenterX()>maxX-5){
-            userComponent.user.setCenterX(maxX-5);
+        else if(userComponent.userPosition.getCenterX()>maxX-5){
+            userComponent.userPosition.setCenterX(maxX-5);
             userCommitmentComponent.xCommitment = 0;
         }
 
-        if(userComponent.user.getCenterY()<5){
-            userComponent.user.setCenterY(5);
+        if(userComponent.userPosition.getCenterY()<5){
+            userComponent.userPosition.setCenterY(5);
             userCommitmentComponent.yCommitment = 0;
         }
-        else if (userComponent.user.getCenterY()>maxY-5){
-            userComponent.user.setCenterY(maxY-5);
+        else if (userComponent.userPosition.getCenterY()>maxY-5){
+            userComponent.userPosition.setCenterY(maxY-5);
             userCommitmentComponent.yCommitment = 0;
         }
     }
