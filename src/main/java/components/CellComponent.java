@@ -12,6 +12,6 @@ public class CellComponent implements Component {
 
     public CellComponent(Circle cellCoverage) {
         this.cellCoverage = cellCoverage;
-        this.cellCoverage.setFill(new Color(135, 206, 250, 0.3));
+        this.cellCoverage.setFill(new Color(135/255, 206/255, 250/255, 0.3));
     }
 }
