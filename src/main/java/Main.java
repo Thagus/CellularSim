@@ -113,24 +113,33 @@ public class Main extends Application{
     private ArrayList<Node> createCells(){
         ArrayList<Node> nodes = new ArrayList<>();
 
-        int cellRadius = 10*BLOCK_SIZE; //Cell range in blocks
+        int xBlocks = 80;
+        int yBlocks = 60;
 
-        double s = cellRadius;
-        double r = Math.cos(Math.toRadians(30))*cellRadius;
-        double h = Math.sin(Math.toRadians(30))*cellRadius;
+        int cellBlockRadius = 5;
 
-        int numRows = 60/10;
-        int numColumns = 80/10;
+        double s = cellBlockRadius*BLOCK_SIZE;
+        double r = Math.cos(Math.toRadians(30))*s;
+        double h = Math.sin(Math.toRadians(30))*s;
+
+        int blocksPerCell = (int) ((2*r)/BLOCK_SIZE);
+
+        System.out.println(blocksPerCell);
+
+        int numRows = (int) (yBlocks/blocksPerCell + 0.5);
+        int numColumns = (int) (xBlocks/blocksPerCell + 0.5);
+
+        System.out.println(numRows + " " + numColumns);
 
         for(int i=0; i<numColumns; i++){
             for(int j=0; j<numRows; j++){
                 Circle circle;
 
                 if(j%2==0){ //Even row
-                    circle = new Circle(i*2*r, j*(h+s), cellRadius);
+                    circle = new Circle(i*2*r, j*(h+s), s);
                 }
                 else{   //Odd row
-                    circle = new Circle(i*2*r+r, j*(h+s), cellRadius);
+                    circle = new Circle(i*2*r+r, j*(h+s), s);
                 }
 
                 CellComponent cellComponent = new CellComponent(circle);
@@ -181,7 +190,7 @@ public class Main extends Application{
                 //System.out.println(delta);
 
                 for(EntitySystem es : systemArrayList){
-                    es.update(delta);
+                    //es.update(delta);
                 }
 
             }
