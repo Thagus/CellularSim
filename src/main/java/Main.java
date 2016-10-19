@@ -122,14 +122,36 @@ public class Main extends Application{
         double r = Math.cos(Math.toRadians(30))*s;
         double h = Math.sin(Math.toRadians(30))*s;
 
-        int blocksPerCell = (int) ((2*r)/BLOCK_SIZE);
+        double blocksPerCell = ((2*Math.cos(Math.toRadians(30))*cellBlockRadius));
 
-        System.out.println(blocksPerCell);
+        int numRows = 0, numColumns = 0;
 
-        int numRows = (int) (yBlocks/blocksPerCell + 0.5);
-        int numColumns = (int) (xBlocks/blocksPerCell + 0.5);
+        //Calculate how many cell rows
+        int yBlocksCovered = 0;
+        while(yBlocksCovered<yBlocks){
+            if(numRows == 0){
+                yBlocksCovered += cellBlockRadius/2;
+            }
+            else if(numRows%2==0){
+                yBlocksCovered += cellBlockRadius;
+            }
+            else {
+                yBlocksCovered += cellBlockRadius*2;
+            }
+            numRows++;
+        }
 
-        System.out.println(numRows + " " + numColumns);
+        //Calculate how many cell columns
+        double xBlocksCovered = 0;
+        while(xBlocksCovered<xBlocks){
+            if(numColumns == 0){
+                xBlocksCovered += blocksPerCell/2;
+            }
+            else {
+                xBlocksCovered += blocksPerCell;
+            }
+            numColumns++;
+        }
 
         for(int i=0; i<numColumns; i++){
             for(int j=0; j<numRows; j++){
