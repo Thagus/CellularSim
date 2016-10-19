@@ -1,6 +1,7 @@
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
+import components.CellComponent;
 import components.CityBlockComponent;
 import components.UserCommitmentComponent;
 import components.UserComponent;
@@ -26,6 +27,8 @@ public class Main extends Application{
     private Engine engine;
     private ArrayList<EntitySystem> systemArrayList;
 
+    private int BLOCK_SIZE = 10;
+
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Cellular simulator");
 
@@ -35,6 +38,7 @@ public class Main extends Application{
         layout.getChildren().add(createMenus());
         layout.getChildren().add(createCanvas());
 
+        addSystems();
 
         Scene scene = new Scene(layout, 1280, 720);
         primaryStage.setScene(scene);
@@ -49,8 +53,8 @@ public class Main extends Application{
 
         initialize();
         simPane.getChildren().addAll(createCityBlocks());
+        simPane.getChildren().addAll(createCells());
         simPane.getChildren().addAll(createUsers());
-        addSystems();
 
 
         return simPane;
@@ -93,7 +97,7 @@ public class Main extends Application{
 
         for(int i=0; i<width; i++){
             for(int j=0; j<height; j++){
-                Rectangle rectangle = new Rectangle(i*10, j*10, 10, 10);
+                Rectangle rectangle = new Rectangle(i*BLOCK_SIZE, j*BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
                 CityBlockComponent cityBlockComponent = new CityBlockComponent(rectangle, CityBlockComponent.BlockType.TRAFFIC);
                 Entity cityBlock = new Entity();
                 cityBlock.add(cityBlockComponent);
@@ -106,12 +110,44 @@ public class Main extends Application{
         return nodes;
     }
 
-    private void createCells(){
+    private ArrayList<Node> createCells(){
+        ArrayList<Node> nodes = new ArrayList<>();
 
+        int cellRadius = 10*BLOCK_SIZE; //Cell range in blocks
+
+        double s = cellRadius;
+        double r = Math.cos(Math.toRadians(30))*cellRadius;
+        double h = Math.sin(Math.toRadians(30))*cellRadius;
+
+        int numRows = 60/10;
+        int numColumns = 80/10;
+
+        for(int i=0; i<numColumns; i++){
+            for(int j=0; j<numRows; j++){
+                Circle circle;
+
+                if(j%2==0){ //Even row
+                    circle = new Circle(i*2*r, j*(h+s), cellRadius);
+                }
+                else{   //Odd row
+                    circle = new Circle(i*2*r+r, j*(h+s), cellRadius);
+                }
+
+                CellComponent cellComponent = new CellComponent(circle);
+
+                Entity cellTower = new Entity();
+                cellTower.add(cellComponent);
+
+                engine.addEntity(cellTower);
+
+                nodes.add(circle);
+            }
+        }
+        return nodes;
     }
 
     private ArrayList<Node> createUsers(){
-        int numUsers = 1;
+        int numUsers = 100;
         ArrayList<Node> nodes = new ArrayList<>();
 
 
