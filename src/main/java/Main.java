@@ -2,6 +2,7 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import components.CityBlockComponent;
+import components.UserCommitmentComponent;
 import components.UserComponent;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -110,16 +111,18 @@ public class Main extends Application{
     }
 
     private ArrayList<Node> createUsers(){
-        int numUsers = 10;
+        int numUsers = 1;
         ArrayList<Node> nodes = new ArrayList<>();
 
 
         for(int i=0; i<numUsers; i++){
-            Circle circle = new Circle(5);
+            Circle circle = new Circle(5, 5, 4);
             UserComponent userComponent = new UserComponent(circle);
+            UserCommitmentComponent userCommitmentComponent = new UserCommitmentComponent();
 
             Entity user = new Entity();
             user.add(userComponent);
+            user.add(userCommitmentComponent);
 
             engine.addEntity(user);
 

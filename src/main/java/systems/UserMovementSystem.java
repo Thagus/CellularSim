@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import components.UserCommitmentComponent;
 import components.UserComponent;
 
 import java.util.Random;
@@ -13,6 +14,8 @@ import java.util.Random;
  */
 public class UserMovementSystem extends IteratingSystem {
     private ComponentMapper<UserComponent> uc = ComponentMapper.getFor(UserComponent.class);
+    private ComponentMapper<UserCommitmentComponent> ucc = ComponentMapper.getFor(UserCommitmentComponent.class);
+
     private Random rnd;
     private int maxX, maxY;
 
@@ -28,49 +31,98 @@ public class UserMovementSystem extends IteratingSystem {
     @Override
     protected void processEntity(Entity entity, float delta) {
         UserComponent userComponent = uc.get(entity);
+        UserCommitmentComponent userCommitmentComponent = ucc.get(entity);
+
         int speed = userComponent.speed;
 
         double newXValue, newYValue;
 
-        if(rnd.nextBoolean()) { //Decide if we move in Y
-            double currY = userComponent.user.getCenterY();
-            if (rnd.nextDouble()>0.2) {  //Decide if we move up or down
-                newYValue = currY + speed*delta;
-            } else {
-                newYValue = currY - speed*delta;
-            }
-
-            //newYValue = currY + speed*delta;
-            userComponent.user.setCenterY(newYValue);
-        }
-        else{   //We move in X
+        if(userCommitmentComponent.xCommitment!=0){ //We have a current commitment for the X axis
+            System.out.println("We have a X commitment");
             double currX = userComponent.user.getCenterX();
-            if(rnd.nextDouble()>0.2){  //Decide if we go right or left
-                newXValue = currX + speed*delta;
+            System.out.println("CurrX: " + currX);
+
+            int direction = (userCommitmentComponent.xCommitment>0)?1:-1;
+
+            float movement = direction*speed*delta;
+
+            float newCommitment = userCommitmentComponent.xCommitment - direction*movement;
+            int direction2 = (newCommitment>0)?1:-1;
+
+            if(direction!=direction2){  //We passed the commitment goal
+                newXValue = currX + userCommitmentComponent.xCommitment;
+                userCommitmentComponent.xCommitment = 0;
             }
-            else {
-                newXValue = currX - speed*delta;
+            else {  //Everything is fine
+                newXValue = currX + movement;
+                userCommitmentComponent.xCommitment -= movement;
             }
 
-            //newXValue = currX + speed*delta;
             userComponent.user.setCenterX(newXValue);
         }
+        else if (userCommitmentComponent.yCommitment!=0){   //We have a commitment for Y axis
+            System.out.println("We have a Y commitment");
+            double currY = userComponent.user.getCenterY();
+            System.out.println("CurrY: " + currY);
 
-        //The new value must always be aligned with the city blocks
+
+            int direction = (userCommitmentComponent.yCommitment>0)?1:-1;
+
+            float movement = direction*speed*delta;
+
+            float newCommitment = userCommitmentComponent.yCommitment - direction*movement;
+            int direction2 = (newCommitment>0)?1:-1;
+
+            if(direction!=direction2){  //We passed the commitment goal
+                newYValue = currY + userCommitmentComponent.yCommitment;
+                userCommitmentComponent.yCommitment = 0;
+            }
+            else {  //Everything is fine
+                newYValue = currY + movement;
+                userCommitmentComponent.yCommitment = newCommitment;
+            }
+
+            userComponent.user.setCenterY(newYValue);
+        }
+        else {  //We must make a commitment
+            System.out.println("We have to make a commitment");
+            if(rnd.nextBoolean()){  //We move in X
+                if(rnd.nextDouble()>0.2){   //We move to the right
+                    userCommitmentComponent.xCommitment = 10;
+                }
+                else{   //We move to the left
+                    userCommitmentComponent.xCommitment = -10;
+                }
+                System.out.println("Commitemt: " + userCommitmentComponent.xCommitment);
+            }
+            else {  //We move in Y
+                if(rnd.nextDouble()>0.2){   //We move down
+                    userCommitmentComponent.yCommitment = 10;
+                }
+                else{   //We move up
+                    userCommitmentComponent.yCommitment = -10;
+                }
+                System.out.println("Commitemt: " + userCommitmentComponent.yCommitment);
+            }
+        }
 
 
         if(userComponent.user.getCenterX()<5){
             userComponent.user.setCenterX(5);
+            userCommitmentComponent.xCommitment = 0;
         }
         else if(userComponent.user.getCenterX()>maxX-5){
             userComponent.user.setCenterX(maxX-5);
+            userCommitmentComponent.xCommitment = 0;
         }
 
         if(userComponent.user.getCenterY()<5){
             userComponent.user.setCenterY(5);
+            userCommitmentComponent.yCommitment = 0;
         }
         else if (userComponent.user.getCenterY()>maxY-5){
             userComponent.user.setCenterY(maxY-5);
+            userCommitmentComponent.yCommitment = 0;
         }
     }
 }

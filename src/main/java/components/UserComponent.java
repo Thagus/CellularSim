@@ -14,6 +14,6 @@ public class UserComponent implements Component {
     public UserComponent(Circle user) {
         this.user = user;
         this.user.setFill(Color.RED);
-        this.speed = 5*60;
+        this.speed = 5;
     }
 }
