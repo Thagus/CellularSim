@@ -12,13 +12,13 @@ import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import systems.UserAgentSystem;
 import systems.UserMovementSystem;
 import utils.Constants;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Thagus on 19/10/16.
@@ -57,6 +57,7 @@ public class SimulationView extends Pane{
     private void addSystems(){
         systemArrayList = new ArrayList<>();
 
+        systemArrayList.add(new UserAgentSystem());
         systemArrayList.add(new UserMovementSystem(WIDTH, HEIGHT));
 
         for(EntitySystem es : systemArrayList){
@@ -114,10 +115,6 @@ public class SimulationView extends Pane{
                 engine.addEntity(cityBlock);
                 nodes.add(rectangle);
             }
-        }
-
-        for(Map.Entry<CityBlockComponent.BlockType, ArrayList<CityBlockComponent>> entry : cityBlocksIndex.entrySet()){
-            System.out.println(entry.getKey() + ": " + entry.getValue());
         }
 
         return nodes;

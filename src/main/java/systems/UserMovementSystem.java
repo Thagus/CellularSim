@@ -16,12 +16,10 @@ public class UserMovementSystem extends IteratingSystem {
     private ComponentMapper<UserComponent> uc = ComponentMapper.getFor(UserComponent.class);
     private ComponentMapper<UserCommitmentComponent> ucc = ComponentMapper.getFor(UserCommitmentComponent.class);
 
-    private Random rnd;
     private int maxX, maxY;
 
     public UserMovementSystem(int maxX, int maxY) {
         super(Family.all(UserComponent.class).get());
-        rnd = new Random();
         this.maxX = maxX;
         this.maxY = maxY;
     }
@@ -78,24 +76,6 @@ public class UserMovementSystem extends IteratingSystem {
             }
 
             userComponent.userPosition.setCenterY(newYValue);
-        }
-        else {  //We must make a commitment
-            if(rnd.nextBoolean()){  //We move in X
-                if(rnd.nextDouble()>0.2){   //We move to the right
-                    userCommitmentComponent.xCommitment = 10;
-                }
-                else{   //We move to the left
-                    userCommitmentComponent.xCommitment = -10;
-                }
-            }
-            else {  //We move in Y
-                if(rnd.nextDouble()>0.2){   //We move down
-                    userCommitmentComponent.yCommitment = 10;
-                }
-                else{   //We move up
-                    userCommitmentComponent.yCommitment = -10;
-                }
-            }
         }
 
 
