@@ -3,10 +3,7 @@ package view;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
-import components.CellComponent;
-import components.CityBlockComponent;
-import components.UserCommitmentComponent;
-import components.UserComponent;
+import components.*;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
@@ -189,6 +186,10 @@ public class SimulationView extends Pane{
         return nodes;
     }
 
+    private void readProfiles(){
+
+    }
+
     private ArrayList<Node> createUsers(){
         int numUsers = 100;
         ArrayList<Node> nodes = new ArrayList<>();
@@ -198,9 +199,13 @@ public class SimulationView extends Pane{
             UserComponent userComponent = new UserComponent(circle);
             UserCommitmentComponent userCommitmentComponent = new UserCommitmentComponent();
 
+            //Select random profile
+            ProfileComponent profileComponent = new ProfileComponent("", false, null, cityBlocksIndex);
+
             Entity user = new Entity();
             user.add(userComponent);
             user.add(userCommitmentComponent);
+            user.add(profileComponent);
 
             engine.addEntity(user);
 
