@@ -23,6 +23,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  * Created by Thagus on 19/10/16.
@@ -276,13 +277,15 @@ public class SimulationView extends Pane{
         int numUsers = 100;
         ArrayList<Node> nodes = new ArrayList<>();
 
+        Random random = new Random();
+
         for(int i=0; i<numUsers; i++){
             Circle circle = new Circle(5, 5, 4);
             UserComponent userComponent = new UserComponent(circle);
             UserCommitmentComponent userCommitmentComponent = new UserCommitmentComponent();
 
             //Select random profile
-            ProfileComponent profileComponent = new ProfileComponent("", false, null, cityBlocksIndex);
+            ProfileComponent profileComponent = new ProfileComponent(profiles.get(random.nextInt(profiles.size())), cityBlocksIndex);
 
             Entity user = new Entity();
             user.add(userComponent);
