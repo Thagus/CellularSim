@@ -28,19 +28,19 @@ public class CityBlockComponent implements Component {
                 break;
             case 'R':
                 this.type = BlockType.RESIDENTIAL;
-                this.block.setFill(Color.BLUE);
+                this.block.setFill(Color.YELLOW);
                 break;
             case 'B':
                 this.type = BlockType.BUSINESS;
-                this.block.setFill(Color.RED);
+                this.block.setFill(Color.LIGHTBLUE);
                 break;
             case 'S':
                 this.type = BlockType.SHOPPING;
-                this.block.setFill(Color.YELLOW);
+                this.block.setFill(Color.ORANGE);
                 break;
             case 'P':
                 this.type = BlockType.PARK;
-                this.block.setFill(Color.GREEN);
+                this.block.setFill(Color.LIGHTGREEN);
                 break;
             default:
                 this.type = BlockType.TRAFFIC;
