@@ -4,15 +4,22 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import components.*;
+import dataObjects.Profile;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Pair;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 import systems.UserAgentSystem;
 import systems.UserMovementSystem;
 import utils.Constants;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +30,8 @@ import java.util.HashMap;
 public class SimulationView extends Pane{
     private Engine engine;
     private ArrayList<EntitySystem> systemArrayList;
+
+    private ArrayList<Profile> profiles;
 
     private int WIDTH = 800, HEIGHT = 600;
 
@@ -56,6 +65,7 @@ public class SimulationView extends Pane{
             cityBlocksIndex.put(b, new ArrayList<>());
         }
 
+        loadProfiles();
         addSystems();
     }
 
@@ -186,7 +196,79 @@ public class SimulationView extends Pane{
         return nodes;
     }
 
-    private void readProfiles(){
+    private void loadProfiles(){
+        profiles = new ArrayList<>();
+
+        File profilesFile = new File(getClass().getClassLoader().getResource("profiles/profiles.xml").getFile());
+
+        try {
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+
+            Document doc = dBuilder.parse(profilesFile);
+
+            doc.getDocumentElement().normalize();
+
+            NodeList nList = doc.getElementsByTagName("profile");
+
+            for (int prof = 0; prof < nList.getLength(); prof++) {
+                org.w3c.dom.Node nNode = nList.item(prof);
+
+                if (nNode.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE) {
+                    Element eElement = (Element) nNode;
+
+                    //Create profile object
+                    Profile profile = new Profile(
+                            eElement.getAttribute("name"),
+                            eElement.getElementsByTagName("workArea").item(0).getTextContent()
+                    );
+
+                    org.w3c.dom.Node scheduleNode = eElement.getElementsByTagName("schedule").item(0);  //Obtain schedule tag, get the 0 as there is only one schedule tag per profile
+
+                    if (scheduleNode.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE) {
+                        NodeList entry = ((Element) scheduleNode).getElementsByTagName("entry");
+
+                        for(int entryCount=0; entryCount<entry.getLength(); entryCount++){
+                            org.w3c.dom.Node entryNode = entry.item(entryCount);
+
+                            if (entryNode.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE) {
+                                Element entryElement = (Element) entryNode; //Treat the node as an element
+                                org.w3c.dom.Node placesNode = entryElement.getElementsByTagName("places").item(0);  //There is only one places tag per entry tag
+
+                                ArrayList<Pair<String, Double>> places = new ArrayList<>();
+
+                                if(placesNode.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE){
+                                    NodeList place = ((Element)placesNode).getElementsByTagName("place");
+
+                                    for(int placeCount=0; placeCount<place.getLength(); placeCount++){
+                                        org.w3c.dom.Node placeNode = place.item(placeCount);
+
+                                        if(placeNode.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE){
+                                            Element placeElement = (Element) placeNode;
+
+                                            places.add(new Pair<>(
+                                                    placeElement.getElementsByTagName("area").item(0).getTextContent(),
+                                                    Double.parseDouble(placeElement.getElementsByTagName("probability").item(0).getTextContent())
+                                            ));
+                                        }
+                                    }
+                                }
+
+                                profile.addScheduleEntry(
+                                        entryElement.getElementsByTagName("start").item(0).getTextContent(),
+                                        entryElement.getElementsByTagName("end").item(0).getTextContent(),
+                                        places
+                                );
+                            }
+                        }
+                    }
+
+                    profiles.add(profile);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
