@@ -17,6 +17,8 @@ import utils.Constants;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Thagus on 19/10/16.
@@ -26,6 +28,9 @@ public class SimulationView extends Pane{
     private ArrayList<EntitySystem> systemArrayList;
 
     private int WIDTH = 800, HEIGHT = 600;
+
+    private HashMap<CityBlockComponent.BlockType, ArrayList<CityBlockComponent>> cityBlocksIndex;
+    private char[][] cityMap;
 
     public SimulationView(){
         setMaxSize(WIDTH, HEIGHT);
@@ -63,8 +68,13 @@ public class SimulationView extends Pane{
         int width = WIDTH/Constants.BLOCK_SIZE;
         int height = HEIGHT/Constants.BLOCK_SIZE;
 
+        cityBlocksIndex = new HashMap<>();
+        for(CityBlockComponent.BlockType b : CityBlockComponent.BlockType.values()){
+            cityBlocksIndex.put(b, new ArrayList<>());
+        }
+
         ArrayList<Node> nodes = new ArrayList<>();
-        char[][] cityMap = new char[height][width];
+        cityMap = new char[height][width];
 
         for(int h=0; h<height; h++){
             for(int w=0; w<width; w++){
@@ -95,14 +105,19 @@ public class SimulationView extends Pane{
 
         for(int i=0; i<height; i++){
             for(int j=0; j<width; j++){
+                //Create entity
                 Rectangle rectangle = new Rectangle(j*Constants.BLOCK_SIZE, i*Constants.BLOCK_SIZE, Constants.BLOCK_SIZE, Constants.BLOCK_SIZE);
-                CityBlockComponent cityBlockComponent = new CityBlockComponent(rectangle, cityMap[i][j]);
+                CityBlockComponent cityBlockComponent = new CityBlockComponent(rectangle, cityMap[i][j], cityBlocksIndex);
                 Entity cityBlock = new Entity();
                 cityBlock.add(cityBlockComponent);
 
                 engine.addEntity(cityBlock);
                 nodes.add(rectangle);
             }
+        }
+
+        for(Map.Entry<CityBlockComponent.BlockType, ArrayList<CityBlockComponent>> entry : cityBlocksIndex.entrySet()){
+            System.out.println(entry.getKey() + ": " + entry.getValue());
         }
 
         return nodes;

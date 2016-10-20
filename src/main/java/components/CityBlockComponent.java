@@ -4,6 +4,9 @@ import com.badlogic.ashley.core.Component;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * Created by Thagus on 18/10/16.
  */
@@ -15,7 +18,7 @@ public class CityBlockComponent implements Component {
     public Rectangle block;
     public BlockType type;
 
-    public CityBlockComponent(Rectangle block, char type) {
+    public CityBlockComponent(Rectangle block, char type, HashMap<BlockType, ArrayList<CityBlockComponent>> cityBlocksIndex) {
         this.block = block;
 
         switch (type){
@@ -29,11 +32,11 @@ public class CityBlockComponent implements Component {
                 break;
             case 'B':
                 this.type = BlockType.BUSINESS;
-                this.block.setFill(Color.GOLD);
+                this.block.setFill(Color.RED);
                 break;
             case 'S':
                 this.type = BlockType.SHOPPING;
-                this.block.setFill(Color.RED);
+                this.block.setFill(Color.YELLOW);
                 break;
             case 'P':
                 this.type = BlockType.PARK;
@@ -46,5 +49,8 @@ public class CityBlockComponent implements Component {
 
         this.block.setStroke(Color.BLACK);
         this.block.setStrokeWidth(1);
+
+        ArrayList<CityBlockComponent> cityBlockComponentArrayList = cityBlocksIndex.get(this.type);
+        cityBlockComponentArrayList.add(this);
     }
 }
