@@ -25,7 +25,7 @@ public class Main extends Application{
         layout.getChildren().add(createMenus());
 
         BorderPane borderPane = new BorderPane();
-        borderPane.setCenter(new SimulationView());
+        borderPane.setCenter(new SimulationView(null));
         borderPane.setLeft(createLeftMenu());
 
         layout.getChildren().add(borderPane);

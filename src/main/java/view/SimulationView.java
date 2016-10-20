@@ -32,15 +32,17 @@ public class SimulationView extends Pane{
     private HashMap<CityBlockComponent.BlockType, ArrayList<CityBlockComponent>> cityBlocksIndex;
     private char[][] cityMap;
 
-    public SimulationView(){
+    public SimulationView(File file){
         setMaxSize(WIDTH, HEIGHT);
         setMinSize(WIDTH, HEIGHT);
         setClip(new Rectangle(WIDTH, HEIGHT));
 
         initialize();
 
-        ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource("map.txt").getFile());
+        if(file==null) {
+            ClassLoader classLoader = getClass().getClassLoader();
+            file = new File(classLoader.getResource("map.txt").getFile());
+        }
 
         getChildren().addAll(loadCityBlocks(file));
         getChildren().addAll(createCells());
