@@ -13,6 +13,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import systems.UserMovementSystem;
+import utils.Constants;
 
 import java.util.ArrayList;
 
@@ -23,9 +24,7 @@ public class SimulationView extends Pane{
     private Engine engine;
     private ArrayList<EntitySystem> systemArrayList;
 
-    private int BLOCK_SIZE = 10;
     private int WIDTH = 800, HEIGHT = 600;
-    private int CELL_BLOCK_RADIUS = 5;
 
     public SimulationView(){
         setMaxSize(WIDTH, HEIGHT);
@@ -57,14 +56,14 @@ public class SimulationView extends Pane{
     }
 
     private ArrayList<Node> createCityBlocks(){
-        int width = WIDTH/BLOCK_SIZE;
-        int height = HEIGHT/BLOCK_SIZE;
+        int width = WIDTH/Constants.BLOCK_SIZE;
+        int height = HEIGHT/Constants.BLOCK_SIZE;
 
         ArrayList<Node> nodes = new ArrayList<>();
 
         for(int i=0; i<width; i++){
             for(int j=0; j<height; j++){
-                Rectangle rectangle = new Rectangle(i*BLOCK_SIZE, j*BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+                Rectangle rectangle = new Rectangle(i*Constants.BLOCK_SIZE, j*Constants.BLOCK_SIZE, Constants.BLOCK_SIZE, Constants.BLOCK_SIZE);
                 CityBlockComponent cityBlockComponent = new CityBlockComponent(rectangle, CityBlockComponent.BlockType.TRAFFIC);
                 Entity cityBlock = new Entity();
                 cityBlock.add(cityBlockComponent);
@@ -80,14 +79,14 @@ public class SimulationView extends Pane{
     private ArrayList<Node> createCells(){
         ArrayList<Node> nodes = new ArrayList<>();
 
-        int xBlocks = WIDTH/BLOCK_SIZE;
-        int yBlocks = HEIGHT/BLOCK_SIZE;
+        int xBlocks = WIDTH/Constants.BLOCK_SIZE;
+        int yBlocks = HEIGHT/Constants.BLOCK_SIZE;
 
-        double s = CELL_BLOCK_RADIUS *BLOCK_SIZE;
+        double s = Constants.CELL_BLOCK_RADIUS *Constants.BLOCK_SIZE;
         double r = Math.cos(Math.toRadians(30))*s;
         double h = Math.sin(Math.toRadians(30))*s;
 
-        double blocksPerCell = ((2*Math.cos(Math.toRadians(30))*CELL_BLOCK_RADIUS));
+        double blocksPerCell = ((2*Math.cos(Math.toRadians(30))*Constants.CELL_BLOCK_RADIUS));
 
         int numRows = 0, numColumns = 0;
 
@@ -95,13 +94,13 @@ public class SimulationView extends Pane{
         int yBlocksCovered = 0;
         while(yBlocksCovered<yBlocks){
             if(numRows == 0){
-                yBlocksCovered += CELL_BLOCK_RADIUS/2;
+                yBlocksCovered += Constants.CELL_BLOCK_RADIUS/2;
             }
             else if(numRows%2==0){
-                yBlocksCovered += CELL_BLOCK_RADIUS;
+                yBlocksCovered += Constants.CELL_BLOCK_RADIUS;
             }
             else {
-                yBlocksCovered += CELL_BLOCK_RADIUS*2;
+                yBlocksCovered += Constants.CELL_BLOCK_RADIUS*2;
             }
             numRows++;
         }
