@@ -7,6 +7,5 @@ import com.badlogic.ashley.core.Component;
  */
 public class UserCommitmentComponent implements Component {
     public float xCommitment, yCommitment;
-    public int xDestination, yDestination;
-    public CityBlockComponent.BlockType destination;
+    public CityBlockComponent destination;
 }
