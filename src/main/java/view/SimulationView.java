@@ -46,12 +46,18 @@ public class SimulationView extends Pane{
         getChildren().addAll(createCells());
         getChildren().addAll(createUsers());
 
-        addSystems();
         startTick();
     }
 
     private void initialize(){
         engine = new Engine();
+
+        cityBlocksIndex = new HashMap<>();
+        for(CityBlockComponent.BlockType b : CityBlockComponent.BlockType.values()){
+            cityBlocksIndex.put(b, new ArrayList<>());
+        }
+
+        addSystems();
     }
 
     private void addSystems(){
@@ -69,13 +75,9 @@ public class SimulationView extends Pane{
         int width = WIDTH/Constants.BLOCK_SIZE;
         int height = HEIGHT/Constants.BLOCK_SIZE;
 
-        cityBlocksIndex = new HashMap<>();
-        for(CityBlockComponent.BlockType b : CityBlockComponent.BlockType.values()){
-            cityBlocksIndex.put(b, new ArrayList<>());
-        }
-
-        ArrayList<Node> nodes = new ArrayList<>();
         cityMap = new char[height][width];
+        ArrayList<Node> nodes = new ArrayList<>();
+
 
         for(int h=0; h<height; h++){
             for(int w=0; w<width; w++){
@@ -188,7 +190,6 @@ public class SimulationView extends Pane{
     private ArrayList<Node> createUsers(){
         int numUsers = 100;
         ArrayList<Node> nodes = new ArrayList<>();
-
 
         for(int i=0; i<numUsers; i++){
             Circle circle = new Circle(5, 5, 4);
