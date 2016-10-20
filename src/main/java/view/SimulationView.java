@@ -15,6 +15,7 @@ import javafx.scene.shape.Rectangle;
 import systems.UserMovementSystem;
 import utils.Constants;
 
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -33,7 +34,10 @@ public class SimulationView extends Pane{
 
         initialize();
 
-        getChildren().addAll(createCityBlocks());
+        ClassLoader classLoader = getClass().getClassLoader();
+        File file = new File(classLoader.getResource("map.txt").getFile());
+
+        getChildren().addAll(loadCityBlocks(file));
         getChildren().addAll(createCells());
         getChildren().addAll(createUsers());
 
@@ -55,16 +59,44 @@ public class SimulationView extends Pane{
         }
     }
 
-    private ArrayList<Node> createCityBlocks(){
+    private ArrayList<Node> loadCityBlocks(File file){
         int width = WIDTH/Constants.BLOCK_SIZE;
         int height = HEIGHT/Constants.BLOCK_SIZE;
 
         ArrayList<Node> nodes = new ArrayList<>();
+        char[][] cityMap = new char[height][width];
 
-        for(int i=0; i<width; i++){
-            for(int j=0; j<height; j++){
-                Rectangle rectangle = new Rectangle(i*Constants.BLOCK_SIZE, j*Constants.BLOCK_SIZE, Constants.BLOCK_SIZE, Constants.BLOCK_SIZE);
-                CityBlockComponent cityBlockComponent = new CityBlockComponent(rectangle, CityBlockComponent.BlockType.TRAFFIC);
+        for(int h=0; h<height; h++){
+            for(int w=0; w<width; w++){
+                cityMap[h][w] = 'T';
+            }
+        }
+
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+
+            String line = null;
+            int i = 0;
+            while ((line = reader.readLine()) != null){
+                int j = 0;
+                for(char letter : line.toCharArray()){
+                    if(i<height && j<width){
+                        cityMap[i][j] = letter;     //i row, j column
+                    }
+                    j++;
+                }
+                i++;
+            }
+
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        for(int i=0; i<height; i++){
+            for(int j=0; j<width; j++){
+                Rectangle rectangle = new Rectangle(j*Constants.BLOCK_SIZE, i*Constants.BLOCK_SIZE, Constants.BLOCK_SIZE, Constants.BLOCK_SIZE);
+                CityBlockComponent cityBlockComponent = new CityBlockComponent(rectangle, cityMap[i][j]);
                 Entity cityBlock = new Entity();
                 cityBlock.add(cityBlockComponent);
 
