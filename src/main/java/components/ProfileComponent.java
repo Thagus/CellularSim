@@ -12,29 +12,31 @@ import java.util.Random;
  */
 public class ProfileComponent implements Component{
     public CityBlockComponent home, work;
-
     public Profile profile;
-
-    public HashMap<CityBlockComponent.BlockType, ArrayList<CityBlockComponent>> locations;  //For each block type we have a set of blocks where the user will be
-
-    //movingProfession might not be necessary, if we use the WORK field of the Excel to determine if he works on the Traffic
 
     public ProfileComponent(Profile profile, HashMap<CityBlockComponent.BlockType, ArrayList<CityBlockComponent>> cityBlocksIndex){
         this.profile = profile;
-
         Random random = new Random();
 
+        //Select the home of the user
         home = cityBlocksIndex.get(CityBlockComponent.BlockType.RESIDENTIAL).get(random.nextInt(cityBlocksIndex.get(CityBlockComponent.BlockType.RESIDENTIAL).size()));
 
-        //Select a work area based on the workArea attribute of the profile
-        work = cityBlocksIndex.get(CityBlockComponent.BlockType.BUSINESS).get(random.nextInt(cityBlocksIndex.get(CityBlockComponent.BlockType.BUSINESS).size()));
-
-
-
-        //Select random locations for different categories
-
-        /*for(ArrayList<String> arrayList : schedule){
-
-        }*/
+        //Define the work block
+        if(profile.isHomeWorker()){ //If he/she works from home, the work block ant the home block are the same
+            work = home;
+        }
+        else{
+            switch(profile.getWorkArea()){  //We must select the work block according the profession
+                case RESIDENTIAL:
+                case BUSINESS:
+                case SHOPPING:
+                case PARK:
+                    work = cityBlocksIndex.get(profile.getWorkArea()).get(random.nextInt(cityBlocksIndex.get(profile.getWorkArea()).size()));
+                    break;
+                case TRAFFIC:
+                    work = null;
+                    break;
+            }
+        }
     }
 }
