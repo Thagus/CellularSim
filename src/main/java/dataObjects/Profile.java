@@ -47,8 +47,6 @@ public class Profile {
         }
 
         schedule = new LinkedHashMap<>();
-
-        System.out.println(this.profileName + " " + this.workArea);
     }
 
     public void addScheduleEntry(String start, String end, ArrayList<Pair<String, Double>> places){
