@@ -21,7 +21,7 @@
                 <end>07:30:00</end>
                 <places>
                     <place>
-                        <area>traffic</area>
+                        <area>work</area>
                         <probability>1.00</probability>
                     </place>
                 </places>
@@ -69,7 +69,7 @@
                 <end>18:30:00</end>
                 <places>
                     <place>
-                        <area>traffic</area>
+                        <area>home</area>
                         <probability>1.00</probability>
                     </place>
                 </places>
