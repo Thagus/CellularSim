@@ -21,6 +21,9 @@ import utils.Constants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.*;
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -65,6 +68,17 @@ public class SimulationView extends Pane{
         for(CityBlockComponent.BlockType b : CityBlockComponent.BlockType.values()){
             cityBlocksIndex.put(b, new ArrayList<>());
         }
+
+        long time = 0;
+
+        try {
+            time = new SimpleDateFormat("HH:mm:ss").parse("00:00:00").getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        //Initialize clock
+        Constants.clock = new Time(time);
 
         loadProfiles();
         addSystems();
@@ -311,6 +325,10 @@ public class SimulationView extends Pane{
                 float delta = (currentTime-lastTime)/1000f;
                 lastTime = currentTime;
                 //System.out.println(delta);
+
+                //Update clock
+                Constants.clock.setTime((Constants.clock.getTime()+(long)(delta*60000*12)));
+                //System.out.println(Constants.clock);
 
                 for(EntitySystem es : systemArrayList){
                     es.update(delta);
