@@ -42,18 +42,17 @@ public class UserAgentSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float v) {
         UserCommitmentComponent userCommitmentComponent = ucc.get(entity);
 
-        if(userCommitmentComponent.xCommitment==0 && userCommitmentComponent.yCommitment==0) {
-            //If we dont have a selected destination, select one based on the schedule
-            if(userCommitmentComponent.destination==null){
+        if(userCommitmentComponent.xCommitment==0 && userCommitmentComponent.yCommitment==0 ) {
+            //Identify the current hour interval
+            String[] hours = Constants.clock.toString().split(":");
+            int minutes = Integer.parseInt(hours[1]);
+
+            //If we dont have a selected destination, select one based on the schedule. Only make a commitment if there is a new time interval (30 mins)
+            if(userCommitmentComponent.destination==null && (minutes==30 || minutes==0)){
                 ProfileComponent profileComponent = pc.get(entity);
 
-                //Identify the current hour interval
-                String[] hours = Constants.clock.toString().split(":");
-                int hour = Integer.parseInt(hours[0]);
-                int minutes = Integer.parseInt(hours[1]);
-
                 String currentInterval;
-                currentInterval = (minutes>=30)? hour+":30:00" : hour+":00:00"; //If the minutes is greater than 30, the block is 30, if not the time interval is the 00
+                currentInterval = (minutes>=30)? hours[0]+":30:00" : hours[0]+":00:00"; //If the minutes is greater than 30, the block is 30, if not the time interval is the 00
 
                 ArrayList<Pair<String, Double>> placesProbabilities;
 
@@ -96,7 +95,7 @@ public class UserAgentSystem extends IteratingSystem {
                     }
                 }
             }
-            else {   //We already have a selected destination, make a specific commitment to improve Manhattan distance
+            else if(userCommitmentComponent.destination!=null){   //We already have a selected destination, make a specific commitment to improve Manhattan distance
                 //Get the current position
                 UserComponent userComponent = uc.get(entity);
 
