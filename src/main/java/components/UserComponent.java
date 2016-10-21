@@ -14,6 +14,6 @@ public class UserComponent implements Component {
     public UserComponent(Circle userPosition) {
         this.userPosition = userPosition;
         this.userPosition.setFill(Color.RED);
-        this.speed = 1*60;  //60 is the base speed
+        this.speed = 2*60;  //60 is the base speed
     }
 }
