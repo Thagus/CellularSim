@@ -16,11 +16,13 @@ public class Profile {
     private static SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
     private String profileName;
     private CityBlockComponent.BlockType workArea;
+    private boolean homeWorker;
 
     private LinkedHashMap<Time, ArrayList<Pair<String, Double>>> schedule;
 
     public Profile(String name, String workArea){
         this.profileName = name;
+        this.homeWorker = false;
 
         switch(workArea){
             case "business":
@@ -29,11 +31,12 @@ public class Profile {
             case "residential":
                 this.workArea = CityBlockComponent.BlockType.RESIDENTIAL;
                 break;
-            case "shopping":
-                this.workArea = CityBlockComponent.BlockType.SHOPPING;
-                break;
             case "home":
                 this.workArea = CityBlockComponent.BlockType.RESIDENTIAL;
+                this.homeWorker = true;
+                break;
+            case "shopping":
+                this.workArea = CityBlockComponent.BlockType.SHOPPING;
                 break;
             case "traffic":
                 this.workArea = CityBlockComponent.BlockType.TRAFFIC;
@@ -80,4 +83,19 @@ public class Profile {
         return times;
     }
 
+    public String getProfileName() {
+        return profileName;
+    }
+
+    public CityBlockComponent.BlockType getWorkArea() {
+        return workArea;
+    }
+
+    public LinkedHashMap<Time, ArrayList<Pair<String, Double>>> getSchedule() {
+        return schedule;
+    }
+
+    public boolean isHomeWorker() {
+        return homeWorker;
+    }
 }
