@@ -48,7 +48,7 @@ public class UserAgentSystem extends IteratingSystem {
             int minutes = Integer.parseInt(hours[1]);
 
             //If we dont have a selected destination, select one based on the schedule. Only make a commitment if there is a new time interval (30 mins)
-            if(userCommitmentComponent.destination==null && (minutes==30 || minutes==0)){
+            if(userCommitmentComponent.destination==null && (minutes==0)){
                 ProfileComponent profileComponent = pc.get(entity);
 
                 String currentInterval;
