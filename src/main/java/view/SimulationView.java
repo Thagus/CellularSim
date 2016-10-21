@@ -87,7 +87,7 @@ public class SimulationView extends Pane{
     private void addSystems(){
         systemArrayList = new ArrayList<>();
 
-        systemArrayList.add(new UserAgentSystem());
+        systemArrayList.add(new UserAgentSystem(cityBlocksIndex));
         systemArrayList.add(new UserMovementSystem(WIDTH, HEIGHT));
 
         for(EntitySystem es : systemArrayList){
@@ -294,12 +294,12 @@ public class SimulationView extends Pane{
         Random random = new Random();
 
         for(int i=0; i<numUsers; i++){
-            Circle circle = new Circle(5, 5, 4);
+            Circle circle = new Circle(4);
             UserComponent userComponent = new UserComponent(circle);
             UserCommitmentComponent userCommitmentComponent = new UserCommitmentComponent();
 
             //Select random profile
-            ProfileComponent profileComponent = new ProfileComponent(profiles.get(random.nextInt(profiles.size())), cityBlocksIndex);
+            ProfileComponent profileComponent = new ProfileComponent(profiles.get(random.nextInt(profiles.size())), cityBlocksIndex, circle);
 
             Entity user = new Entity();
             user.add(userComponent);
