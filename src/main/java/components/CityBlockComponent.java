@@ -4,15 +4,22 @@ import com.badlogic.ashley.core.Component;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * Created by Thagus on 18/10/16.
  */
 public class CityBlockComponent implements Component {
     public enum BlockType {
-        RESIDENTIAL, BUSINESS, SHOPPING, TRAFFIC, PARK
+        RESIDENTIAL, BUSINESS, SHOPPING, TRAFFIC, PARK;
+
+        private static final List<BlockType> VALUES = Collections.unmodifiableList(Arrays.asList(values()));
+        private static final int SIZE = VALUES.size();
+        private static final Random RANDOM = new Random();
+
+        public static BlockType randomBlock()  {
+            return VALUES.get(RANDOM.nextInt(SIZE));
+        }
     }
 
     public Rectangle block;
@@ -28,11 +35,11 @@ public class CityBlockComponent implements Component {
                 break;
             case 'R':
                 this.type = BlockType.RESIDENTIAL;
-                this.block.setFill(Color.YELLOW);
+                this.block.setFill(Color.LIGHTBLUE);
                 break;
             case 'B':
                 this.type = BlockType.BUSINESS;
-                this.block.setFill(Color.LIGHTBLUE);
+                this.block.setFill(Color.YELLOW);
                 break;
             case 'S':
                 this.type = BlockType.SHOPPING;
