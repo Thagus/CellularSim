@@ -288,12 +288,11 @@ public class SimulationView extends Pane{
     }
 
     private ArrayList<Node> createUsers(){
-        int numUsers = 100;
         ArrayList<Node> nodes = new ArrayList<>();
 
         Random random = new Random();
 
-        for(int i=0; i<numUsers; i++){
+        for(int i=0; i<Constants.NUMBER_OF_USERS; i++){
             Circle circle = new Circle(4);
             UserComponent userComponent = new UserComponent(circle);
             UserCommitmentComponent userCommitmentComponent = new UserCommitmentComponent();
@@ -328,7 +327,7 @@ public class SimulationView extends Pane{
 
                 //Update clock
                 Constants.clock.setTime((Constants.clock.getTime()+(long)(delta*60000*12)));
-                //System.out.println(Constants.clock);
+                System.out.println(Constants.clock);
 
                 for(EntitySystem es : systemArrayList){
                     es.update(delta);
