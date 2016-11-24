@@ -10,6 +10,7 @@ case class EndCall(userID: Integer)
 
 class CellTowerActor (id: Integer) extends Actor{
   private var totalCalls = 0
+
   def receive = {
     case MakeCall(userID) => {
       context.actorOf(Props[CallHandlerActor]) ! ProcessCall(userID)
