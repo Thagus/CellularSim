@@ -45,13 +45,21 @@ public class PagingSystem extends EntitySystem {
         }
     }
 
-    //Check if the selected user is indeed inside the paged cell
-    public boolean confirmPosition(Entity user){
+    /**
+     * Check if the selected user is indeed inside the paged cell, and return the cell id if so
+     * @param user The user we want to check if it is in the paged cell
+     * @return the cell id if the user is within it
+     */
+    public int confirmPosition(Entity user){
         UserComponent userComponent = ucm.get(user);
 
         Entity cell = paging.get(userComponent.id);
         CellComponent cellComponent = ccm.get(cell);
 
-        return cellComponent.cellCoverage.contains(userComponent.userPosition.getCenterX(), userComponent.userPosition.getCenterY());
+        if(cellComponent.cellCoverage.contains(userComponent.userPosition.getCenterX(), userComponent.userPosition.getCenterY())){
+            return cellComponent.id;
+        }
+
+        return -1;
     }
 }

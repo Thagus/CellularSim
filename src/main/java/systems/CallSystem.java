@@ -36,10 +36,12 @@ public class CallSystem extends EntitySystem {
                 if(rnd.nextDouble()>0.8){   //20% probability
                     //Select the receiving user
                     int receivingUser = rnd.nextInt(numberOfUsers);
+                    int receivingCellID = pagingSystem.confirmPosition(userEntities.get(receivingUser));
 
                     //Check if the receiving user is in the expected cell
-                    if(pagingSystem.confirmPosition(userEntities.get(receivingUser))){
+                    if(receivingCellID!=-1){
                         //Create an actor to handle the call
+                        System.out.println("User making a call to " + receivingUser + " in cell " + receivingCellID);
 
                         //Set the cooldown to a random number between 5 and 15
                         userCallComponent.callCooldown = rnd.nextFloat()*15 + 5;
