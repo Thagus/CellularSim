@@ -14,11 +14,11 @@ class CellTowerActor (id: Integer) extends Actor{
     case MakeCall(userID) => {
       context.actorOf(Props[CallHandlerActor]) ! ProcessCall(userID)
       totalCalls += 1
-      println("Starting one, now: ",totalCalls," call on cell ",id)
+      println("Starting call for ", userID," call on cell ",id, ". Total calls now: ",totalCalls)
     }
     case EndCall(userID) => {
       totalCalls -= 1
-      println("Ending one, now: ",totalCalls," call on cell ",id)
+      println("Ending call of user", userID," call on cell ",id, ". Total calls now: ",totalCalls)
     }
     case _ => println("Error: message not recognized")
   }
