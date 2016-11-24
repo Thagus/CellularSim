@@ -198,7 +198,7 @@ public class SimulationView extends Pane{
                     circle = new Circle(i*2*r+r, j*(h+s), s);
                 }
 
-                CellComponent cellComponent = new CellComponent(circle);
+                CellComponent cellComponent = new CellComponent(circle, i+j);
 
                 Entity cellTower = new Entity();
                 cellTower.add(cellComponent);
@@ -294,8 +294,9 @@ public class SimulationView extends Pane{
 
         for(int i=0; i<Constants.NUMBER_OF_USERS; i++){
             Circle circle = new Circle(4);
-            UserComponent userComponent = new UserComponent(circle);
+            UserComponent userComponent = new UserComponent(circle, i);
             UserCommitmentComponent userCommitmentComponent = new UserCommitmentComponent();
+            UserCallComponent userCallComponent = new UserCallComponent(random.nextFloat()*15);
 
             //Select random profile
             ProfileComponent profileComponent = new ProfileComponent(profiles.get(random.nextInt(profiles.size())), cityBlocksIndex, circle);
@@ -304,6 +305,7 @@ public class SimulationView extends Pane{
             user.add(userComponent);
             user.add(userCommitmentComponent);
             user.add(profileComponent);
+            user.add(userCallComponent);
 
             engine.addEntity(user);
 
