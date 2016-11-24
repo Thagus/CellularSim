@@ -62,4 +62,28 @@ public class PagingSystem extends EntitySystem {
 
         return -1;
     }
+
+    /**
+     * Get the cell containing an user
+     * @param user the user
+     * @return the cell id that contains the user
+     */
+    public int getUserPosition(Entity user){
+        UserComponent userComponent = ucm.get(user);
+        CellComponent cellComponent = ccm.get(paging.get(userComponent.id));
+
+        if(cellComponent.cellCoverage.contains(userComponent.userPosition.getCenterX(), userComponent.userPosition.getCenterY())){
+            return cellComponent.id;
+        }
+        else{
+            for(Entity cell : cellEntities){
+                cellComponent = ccm.get(cell);
+
+                if(cellComponent.cellCoverage.contains(userComponent.userPosition.getCenterX(), userComponent.userPosition.getCenterY())){
+                    return cellComponent.id;
+                }
+            }
+        }
+        return -1;
+    }
 }
