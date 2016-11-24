@@ -18,8 +18,6 @@ class CallManager extends Actor{
       //Find the actor for the cell, or create it if none exists
       val cellTowerActor = cellRegistry.getOrElseUpdate(cellID, context.actorOf(Props(new CellTowerActor(cellID))))
 
-      println(cellTowerActor)
-
       //Send the message of MakeCall to the tower actor with the user id
       cellTowerActor ! MakeCall(userID)
     }
