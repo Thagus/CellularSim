@@ -10,14 +10,14 @@ import scala.concurrent.ExecutionContext.Implicits.global
 /**
   * Created by Thagus on 15/11/16.
   */
-case class ProcessCall()
+case class ProcessCall(userID: Integer)
 
 class CallHandlerActor extends Actor{
   def receive = {
-    case ProcessCall => {
+    case ProcessCall(userID) => {
       val r = scala.util.Random
 
-      context.system.scheduler.scheduleOnce(Duration.create(r.nextInt(7), TimeUnit.SECONDS), sender, EndCall)
+      context.system.scheduler.scheduleOnce(Duration.create(r.nextInt(7), TimeUnit.SECONDS), sender, EndCall(userID))
     }
     case _ => println("Error: message not recognized")
   }
