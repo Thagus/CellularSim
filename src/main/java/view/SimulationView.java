@@ -1,5 +1,9 @@
 package view;
 
+import actors.CallManager;
+import akka.actor.ActorRef;
+import akka.actor.ActorSystem;
+import akka.actor.Props;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
@@ -93,7 +97,11 @@ public class SimulationView extends Pane{
         systemArrayList.add(new UserMovementSystem(WIDTH, HEIGHT));
         PagingSystem pagingSystem = new PagingSystem();
         systemArrayList.add(pagingSystem);
-        systemArrayList.add(new CallSystem(pagingSystem));
+
+        final ActorSystem system = ActorSystem.create("System");
+        ActorRef manager = system.actorOf(Props.create(CallManager.class));
+
+        systemArrayList.add(new CallSystem(pagingSystem, manager));
 
         for(EntitySystem es : systemArrayList){
             engine.addSystem(es);
