@@ -14,6 +14,8 @@ import javafx.util.Pair;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import systems.CallSystem;
+import systems.PagingSystem;
 import systems.UserAgentSystem;
 import systems.UserMovementSystem;
 import utils.Constants;
@@ -89,6 +91,9 @@ public class SimulationView extends Pane{
 
         systemArrayList.add(new UserAgentSystem(cityBlocksIndex));
         systemArrayList.add(new UserMovementSystem(WIDTH, HEIGHT));
+        PagingSystem pagingSystem = new PagingSystem();
+        systemArrayList.add(pagingSystem);
+        systemArrayList.add(new CallSystem(pagingSystem));
 
         for(EntitySystem es : systemArrayList){
             engine.addSystem(es);
