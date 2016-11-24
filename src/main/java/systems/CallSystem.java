@@ -45,9 +45,11 @@ public class CallSystem extends EntitySystem {
 
                     //Check if the receiving user is in the expected cell
                     if(receivingCellID!=-1){
-                        //Create an actor to handle the call
                         System.out.println("User making a call to " + receivingUser + " in cell " + receivingCellID);
-                        managerRef.tell(new PlaceCall(receivingCellID, id), ActorRef.noSender());
+
+                        int standingCell = pagingSystem.getUserPosition(user);
+                        //Create an actor to handle the call
+                        managerRef.tell(new PlaceCall(standingCell, id), ActorRef.noSender());
 
                         //Set the cooldown to a random number between 5 and 15
                         userCallComponent.callCooldown = rnd.nextFloat()*15 + 5;
