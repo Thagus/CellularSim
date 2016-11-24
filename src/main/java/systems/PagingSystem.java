@@ -29,7 +29,20 @@ public class PagingSystem extends EntitySystem {
     }
 
     public void update(float delta){
+        for(Entity user : userEntities){
+            for(Entity cell : cellEntities){
+                UserComponent userComponent = ucm.get(user);
+                CellComponent cellComponent = ccm.get(cell);
 
+                if(cellComponent.cellCoverage.contains(userComponent.userPosition.getCenterX(), userComponent.userPosition.getCenterY())){
+                    Entity actualCell = paging.get(userComponent.id);
+
+                    if(actualCell == null || actualCell!=cell){
+                        paging.put(userComponent.id, cell);
+                    }
+                }
+            }
+        }
     }
 
     //Check if the selected user is indeed inside the paged cell
