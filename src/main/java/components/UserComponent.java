@@ -10,10 +10,12 @@ import javafx.scene.shape.Circle;
 public class UserComponent implements Component {
     public Circle userPosition;
     public int speed;
+    public int id;
 
-    public UserComponent(Circle userPosition) {
+    public UserComponent(Circle userPosition, int id) {
         this.userPosition = userPosition;
         this.userPosition.setFill(Color.RED);
         this.speed = 2*60;  //60 is the base speed
+        this.id = id;
     }
 }
