@@ -16,10 +16,10 @@ class CallManager extends Actor{
   override def receive = {
     case PlaceCall(cellID, userID) => {
       //Find the actor for the cell, or create it if none exists
-      val cellTowerActor = cellRegistry.getOrElseUpdate(cellID, context.actorOf(Props(new CellTowerActor(cellID))))
+      val senderCell = cellRegistry.getOrElseUpdate(cellID, context.actorOf(Props(new CellTowerActor(cellID))))
 
       //Send the message of MakeCall to the tower actor with the user id
-      cellTowerActor ! MakeCall(userID)
+      senderCell ! MakeCall(userID)
     }
   }
 }
