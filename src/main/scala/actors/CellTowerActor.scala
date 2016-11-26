@@ -5,7 +5,7 @@ import utils.Constants
 import akka.actor._
 import akka.pattern.ask
 import akka.util.Timeout
-import scala.concurrent.{Await, ExecutionContext, Future}
+import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.language.postfixOps
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -66,9 +66,9 @@ class CellTowerActor (id: Integer) extends Actor{
       receivingCell ! EndReceivingCall(receivingUserID)
       println("Ending call of user " + userID + " call on cell " + id + ". Total calls now: " + totalCalls)
     }
-    case EndReceivingCall(userID) => {
+    case EndReceivingCall(receivingUserID) => {
       totalCalls -= 1
-      println("Ending received call of user" + userID + " call on cell " + id + ". Total calls now: " + totalCalls)
+      println("Ending received call of user" + receivingUserID + " call on cell " + id + ". Total calls now: " + totalCalls)
     }
     case _ => println("Error: message not recognized")
   }
