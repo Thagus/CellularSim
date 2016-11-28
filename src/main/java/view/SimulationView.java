@@ -305,14 +305,24 @@ public class SimulationView extends Pane{
 
         Random random = new Random();
 
+        int usersPerProfile = Constants.NUMBER_OF_USERS / profiles.size();
+
+        int currentProfileChange = usersPerProfile;
+        int profile = 0;
+
         for(int i=0; i<Constants.NUMBER_OF_USERS; i++){
             Circle circle = new Circle(4);
             UserComponent userComponent = new UserComponent(circle, i);
             UserCommitmentComponent userCommitmentComponent = new UserCommitmentComponent();
             UserCallComponent userCallComponent = new UserCallComponent(random.nextFloat()*15);
 
+            if(i == currentProfileChange){
+                currentProfileChange = i + usersPerProfile;
+                profile++;
+            }
+
             //Select random profile
-            ProfileComponent profileComponent = new ProfileComponent(profiles.get(random.nextInt(profiles.size())), cityBlocksIndex, circle);
+            ProfileComponent profileComponent = new ProfileComponent(profiles.get(profile), cityBlocksIndex, circle);
 
             Entity user = new Entity();
             user.add(userComponent);
