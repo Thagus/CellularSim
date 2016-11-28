@@ -67,12 +67,13 @@ public class UserAgentSystem extends IteratingSystem {
             }
 
 
-            //If we dont have a selected destination or is time to make a commitment, select one based on the schedule.
-            if(userCommitmentComponent.destination==null && newInterval){
+            /*
+                Select a commitment based on the schedule.
+            */
+            if(newInterval && userCommitmentComponent.destination==null){  //If we don't have a selected destination or is time to make a commitment, make one
                 ArrayList<Pair<String, Double>> placesProbabilities;
 
                 placesProbabilities = profileComponent.profile.getSchedule().get(currentTimeBlock);
-
 
                 for(Pair<String, Double> placeProbability : placesProbabilities){
                     if(rnd.nextDouble()<placeProbability.getValue()){   //if the random value is smaller than the wanted probability, we found the place we want to be :)
@@ -81,7 +82,7 @@ public class UserAgentSystem extends IteratingSystem {
                                 userCommitmentComponent.destination = profileComponent.home;
                                 break;
                             case "work":
-                                if(profileComponent.work==null){    //If the work is null, the profession involves moving arround the city
+                                if(profileComponent.work==null){    //If the work is null, the profession involves moving around the city
                                     //Select a random location
                                     ArrayList<CityBlockComponent> blockComponents = cityBlocksIndex.get(CityBlockComponent.BlockType.randomBlock());
                                     userCommitmentComponent.destination = blockComponents.get(rnd.nextInt(blockComponents.size()));
@@ -103,6 +104,23 @@ public class UserAgentSystem extends IteratingSystem {
                                 userCommitmentComponent.destination = cityBlocksIndex.get(CityBlockComponent.BlockType.PARK).get(rnd.nextInt(cityBlocksIndex.get(CityBlockComponent.BlockType.PARK).size()));
                                 break;
                         }
+                    }
+                }
+            }
+            else if(profileComponent.work==null && userCommitmentComponent.destination==null){   //Traffic workers move around constantly
+                UserComponent userComponent = uc.get(entity);
+
+                ArrayList<Pair<String, Double>> placesProbabilities;
+
+                placesProbabilities = profileComponent.profile.getSchedule().get(currentTimeBlock);
+
+                for(Pair<String, Double> placeProbability : placesProbabilities){
+                    if(rnd.nextDouble()<placeProbability.getValue() && placeProbability.getKey().equals("work")){
+                        userComponent.speed = 2*60;
+                        //Select a random location
+                        ArrayList<CityBlockComponent> blockComponents = cityBlocksIndex.get(CityBlockComponent.BlockType.randomBlock());
+                        userCommitmentComponent.destination = blockComponents.get(rnd.nextInt(blockComponents.size()));
+                        userComponent.speed = 4*60;
                     }
                 }
             }
