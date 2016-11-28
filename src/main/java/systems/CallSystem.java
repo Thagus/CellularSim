@@ -5,6 +5,7 @@ import akka.actor.ActorRef;
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
 import components.UserCallComponent;
+import utils.Variables;
 
 import java.util.Random;
 
@@ -53,6 +54,9 @@ public class CallSystem extends EntitySystem {
 
                         //Set the cooldown to a random number between 5 and 15
                         userCallComponent.callCooldown = rnd.nextFloat()*15 + 5;
+                    }
+                    else {  //Call blocked due to wrong receiving location
+                        Variables.locationBlockedCalls++;
                     }
                 }
             }
