@@ -4,9 +4,9 @@ package dataObjects;
  * Created by Thagus on 28/11/16.
  */
 public class TechnologyStandard {
-    private String technologyName;
-    private float cellRadius;
-    private int usersPerCell;
+    private String technologyName;  //Technology name
+    private float cellRadius;       //Cell radius in kilometers
+    private int usersPerCell;       //Number of users per cell considering duplex channels
     private float dataRate;         //Data rate in kbps
     private String multipleAccess;  //Multiple access technology name
 
