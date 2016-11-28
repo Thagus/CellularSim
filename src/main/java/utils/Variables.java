@@ -7,9 +7,9 @@ public class Variables {
     /**
      * Counters for calls
      */
-    public static volatile int receiverCellBlockedCalls;
-    public static volatile int senderCellBlockedCalls;
-    public static volatile int locationBlockedCalls;
-    public static volatile int successfullyStartedCalls;
-    public static volatile int successfullyEndedCalls;
+    public static volatile Integer receiverCellBlockedCalls = 0;
+    public static volatile Integer senderCellBlockedCalls = 0;
+    public static volatile Integer locationBlockedCalls = 0;
+    public static volatile Integer successfullyStartedCalls = 0;
+    public static volatile Integer successfullyEndedCalls = 0;
 }
