@@ -12,7 +12,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
 import javafx.scene.shape.StrokeType;
-import javafx.stage.Stage;
 
 /**
  * Created by Thagus on 28/11/16.
@@ -27,7 +26,7 @@ public class View {
         layout.getChildren().add(createMenus());
 
         BorderPane borderPane = new BorderPane();
-        borderPane.setCenter(new SimulationView(null));
+        borderPane.setCenter(new SimulationView(this));
         borderPane.setLeft(createLeftMenu());
 
         layout.getChildren().add(borderPane);

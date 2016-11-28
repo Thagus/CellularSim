@@ -40,6 +40,7 @@ import java.util.Random;
  */
 public class SimulationView extends Pane{
     private Engine engine;
+    private View view;
     private ArrayList<EntitySystem> systemArrayList;
 
     private ArrayList<Profile> profiles;
@@ -49,18 +50,17 @@ public class SimulationView extends Pane{
     private HashMap<CityBlockComponent.BlockType, ArrayList<CityBlockComponent>> cityBlocksIndex;
     private char[][] cityMap;
 
-    public SimulationView(InputStream file){
+    public SimulationView(View view){
+        this.view = view;
         setMaxSize(WIDTH, HEIGHT);
         setMinSize(WIDTH, HEIGHT);
         setClip(new Rectangle(WIDTH, HEIGHT));
 
         initialize();
 
-        if(file==null) {
-            file = getClass().getResourceAsStream("/map.txt");
-        }
+        InputStream mapStrem = getClass().getResourceAsStream("/map.txt");
 
-        getChildren().addAll(loadCityBlocks(file));
+        getChildren().addAll(loadCityBlocks(mapStrem));
         getChildren().addAll(createCells());
         getChildren().addAll(createUsers());
 
@@ -356,6 +356,8 @@ public class SimulationView extends Pane{
                 System.out.println("\t\tLocation blocked: " + Variables.locationBlockedCalls);
                 System.out.println("\t\tSender blocked: " + Variables.senderCellBlockedCalls);
                 System.out.println("\t\tReceiver blocked: " + Variables.receiverCellBlockedCalls);
+
+
 
                 for(EntitySystem es : systemArrayList){
                     es.update(delta);
