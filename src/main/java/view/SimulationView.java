@@ -49,7 +49,7 @@ public class SimulationView extends Pane{
     private HashMap<CityBlockComponent.BlockType, ArrayList<CityBlockComponent>> cityBlocksIndex;
     private char[][] cityMap;
 
-    public SimulationView(File file){
+    public SimulationView(InputStream file){
         setMaxSize(WIDTH, HEIGHT);
         setMinSize(WIDTH, HEIGHT);
         setClip(new Rectangle(WIDTH, HEIGHT));
@@ -57,8 +57,7 @@ public class SimulationView extends Pane{
         initialize();
 
         if(file==null) {
-            ClassLoader classLoader = getClass().getClassLoader();
-            file = new File(classLoader.getResource("map.txt").getFile());
+            file = getClass().getResourceAsStream("/map.txt");
         }
 
         getChildren().addAll(loadCityBlocks(file));
@@ -109,7 +108,7 @@ public class SimulationView extends Pane{
         }
     }
 
-    private ArrayList<Node> loadCityBlocks(File file){
+    private ArrayList<Node> loadCityBlocks(InputStream file){
         int width = WIDTH/Constants.BLOCK_SIZE;
         int height = HEIGHT/Constants.BLOCK_SIZE;
 
@@ -124,7 +123,7 @@ public class SimulationView extends Pane{
         }
 
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(file));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(file));
 
             String line = null;
             int i = 0;
@@ -228,13 +227,11 @@ public class SimulationView extends Pane{
     private void loadProfiles(){
         profiles = new ArrayList<>();
 
-        File profilesFile = new File(getClass().getClassLoader().getResource("profiles/profiles.xml").getFile());
-
         try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 
-            Document doc = dBuilder.parse(profilesFile);
+            Document doc = dBuilder.parse(getClass().getResourceAsStream("/profiles.xml"));
 
             doc.getDocumentElement().normalize();
 
