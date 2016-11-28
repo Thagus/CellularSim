@@ -1,8 +1,8 @@
 <technologies>
-    <technology name="">
-        <multipleAccess></multipleAccess>
-        <dataRate></dataRate>
-        <cellRadius></cellRadius>
-        <usersPerCell></usersPerCell>
+    <technology name="GSM">
+        <multipleAccess>TDMA</multipleAccess>
+        <dataRate>13</dataRate>
+        <cellRadius>35</cellRadius>
+        <usersPerCell>992</usersPerCell>
     </technology>
 </technologies>
