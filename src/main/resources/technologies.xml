@@ -1,6 +1,7 @@
 <technologies>
     <technology name="">
         <multipleAccess></multipleAccess>
+        <dataRate></dataRate>
         <cellRadius></cellRadius>
         <usersPerCell></usersPerCell>
     </technology>
