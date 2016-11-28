@@ -7,6 +7,7 @@ import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 /**
@@ -18,11 +19,17 @@ public class Profile {
     private CityBlockComponent.BlockType workArea;
     private boolean homeWorker;
 
-    private LinkedHashMap<Time, ArrayList<Pair<String, Double>>> schedule;
+    private int timeBlocksCount;
+
+    private LinkedHashMap<Integer, TimeRange> timeBlocks;
+    private HashMap<Integer, ArrayList<Pair<String, Double>>> schedule;
+
+
 
     public Profile(String name, String workArea){
         this.profileName = name;
         this.homeWorker = false;
+        this.timeBlocksCount = 0;
 
         switch(workArea){
             case "business":
@@ -46,39 +53,22 @@ public class Profile {
                 break;
         }
 
-        schedule = new LinkedHashMap<>();
+        timeBlocks = new LinkedHashMap<>();
+        schedule = new HashMap<>();
     }
 
     public void addScheduleEntry(String start, String end, ArrayList<Pair<String, Double>> places){
-        ArrayList<Time> times = null;
 
         try {
-            times = getTimesInRange(new Time(sdf.parse(start).getTime()), new Time(sdf.parse(end).getTime()));
+            TimeRange timeRange = new TimeRange(new Time(sdf.parse(start).getTime()), new Time(sdf.parse(end).getTime()));
+
+            timeBlocksCount++;
+
+            timeBlocks.put(timeBlocksCount, timeRange);
+            schedule.put(timeBlocksCount, places);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-        if(times!=null){
-            for(Time time : times){
-                //Add for each time the schedule in that range
-                schedule.put(time, places);
-            }
-        }
-    }
-
-    private ArrayList<Time> getTimesInRange(Time start, Time end){
-        ArrayList<Time> times = new ArrayList<>();
-
-        long time = start.getTime();
-        times.add(start);
-
-        //Divide the hours in intervals of 30 minutes
-        while(time<end.getTime()){
-            time += 1800000L;
-            times.add(new Time(time));
-        }
-
-        return times;
     }
 
     public String getProfileName() {
@@ -89,11 +79,19 @@ public class Profile {
         return workArea;
     }
 
-    public LinkedHashMap<Time, ArrayList<Pair<String, Double>>> getSchedule() {
-        return schedule;
-    }
-
     public boolean isHomeWorker() {
         return homeWorker;
+    }
+
+    public int getTimeBlocksCount() {
+        return timeBlocksCount;
+    }
+
+    public LinkedHashMap<Integer, TimeRange> getTimeBlocks() {
+        return timeBlocks;
+    }
+
+    public HashMap<Integer, ArrayList<Pair<String, Double>>> getSchedule() {
+        return schedule;
     }
 }

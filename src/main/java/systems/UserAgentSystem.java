@@ -8,15 +8,14 @@ import components.CityBlockComponent;
 import components.ProfileComponent;
 import components.UserCommitmentComponent;
 import components.UserComponent;
+import dataObjects.TimeRange;
 import javafx.util.Pair;
 import utils.Constants;
 
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by Thagus on 19/10/16.
@@ -42,26 +41,38 @@ public class UserAgentSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float v) {
         UserCommitmentComponent userCommitmentComponent = ucc.get(entity);
 
+
         if(userCommitmentComponent.xCommitment==0 && userCommitmentComponent.yCommitment==0 ) {
-            //Identify the current hour interval
-            String[] hours = Constants.clock.toString().split(":");
-            int minutes = Integer.parseInt(hours[1]);
+            ProfileComponent profileComponent = pc.get(entity);
+            //Obtain time blocks
+            LinkedHashMap<Integer, TimeRange> timeBlocks = profileComponent.profile.getTimeBlocks();
 
-            //If we dont have a selected destination, select one based on the schedule. Only make a commitment if there is a new time interval (30 mins)
-            if(userCommitmentComponent.destination==null && (minutes==0)){
-                ProfileComponent profileComponent = pc.get(entity);
+            int currentTimeBlock = -1;
 
-                String currentInterval;
-                currentInterval = (minutes>=30)? hours[0]+":30:00" : hours[0]+":00:00"; //If the minutes is greater than 30, the block is 30, if not the time interval is the 00
+            //Identify the time block where the current hour belongs
+            for(Map.Entry<Integer, TimeRange> entry : timeBlocks.entrySet()){
+                if(entry.getValue().isWithinRange(Constants.clock)){
+                    currentTimeBlock = entry.getKey();
+                    break;
+                }
+            }
 
+            //Check if the current commitmentComponent has that block marked, if not, make a commitment
+            boolean newInterval = false;
+
+            if(currentTimeBlock!=-1 && userCommitmentComponent.commitmentTimeBlock!=currentTimeBlock) {
+                newInterval = true;
+                //Update the commitment time block
+                userCommitmentComponent.commitmentTimeBlock = currentTimeBlock;
+            }
+
+
+            //If we dont have a selected destination or is time to make a commitment, select one based on the schedule.
+            if(userCommitmentComponent.destination==null && newInterval){
                 ArrayList<Pair<String, Double>> placesProbabilities;
 
-                try {
-                    placesProbabilities = profileComponent.profile.getSchedule().get(new Time(sdf.parse(currentInterval).getTime()));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                    return;
-                }
+                placesProbabilities = profileComponent.profile.getSchedule().get(currentTimeBlock);
+
 
                 for(Pair<String, Double> placeProbability : placesProbabilities){
                     if(rnd.nextDouble()<placeProbability.getValue()){   //if the random value is smaller than the wanted probability, we found the place we want to be :)
@@ -95,7 +106,7 @@ public class UserAgentSystem extends IteratingSystem {
                     }
                 }
             }
-            else if(userCommitmentComponent.destination!=null){   //We already have a selected destination, make a specific commitment to improve Manhattan distance
+            else if(userCommitmentComponent.destination!=null) {   //We already have a selected destination, make a specific commitment to improve Manhattan distance
                 //Get the current position
                 UserComponent userComponent = uc.get(entity);
 
