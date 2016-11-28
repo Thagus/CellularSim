@@ -17,7 +17,7 @@ import javafx.scene.shape.StrokeType;
  * Created by Thagus on 28/11/16.
  */
 public class View {
-    Label receiverCellBlockedCalls, senderCellBlockedCalls, locationBlockedCalls, successfullyStartedCalls, successfullyEndedCalls;
+    private Label receiverCellBlockedCalls, senderCellBlockedCalls, locationBlockedCalls, successfullyStartedCalls, successfullyEndedCalls;
 
     public Scene createScene(){
         VBox layout = new VBox();
@@ -71,7 +71,7 @@ public class View {
         return leftMenu;
     }
 
-    private void setLabelValues(int successfullyStartedCalls, int successfullyEndedCalls, int locationBlockedCalls, int senderCellBlockedCalls, int receiverCellBlockedCalls){
+    public void setLabelValues(int successfullyStartedCalls, int successfullyEndedCalls, int locationBlockedCalls, int senderCellBlockedCalls, int receiverCellBlockedCalls){
         this.successfullyStartedCalls.setText(successfullyStartedCalls + "");
         this.successfullyEndedCalls.setText(successfullyEndedCalls + "");
         this.locationBlockedCalls.setText(locationBlockedCalls + "");

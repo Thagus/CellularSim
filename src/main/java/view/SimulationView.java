@@ -357,7 +357,13 @@ public class SimulationView extends Pane{
                 System.out.println("\t\tSender blocked: " + Variables.senderCellBlockedCalls);
                 System.out.println("\t\tReceiver blocked: " + Variables.receiverCellBlockedCalls);
 
-
+                view.setLabelValues(
+                        Variables.successfullyStartedCalls,
+                        Variables.successfullyEndedCalls,
+                        Variables.locationBlockedCalls,
+                        Variables.senderCellBlockedCalls,
+                        Variables.receiverCellBlockedCalls
+                );
 
                 for(EntitySystem es : systemArrayList){
                     es.update(delta);
