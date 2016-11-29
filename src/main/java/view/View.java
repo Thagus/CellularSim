@@ -1,5 +1,6 @@
 package view;
 
+import controllers.TechnologyToggleController;
 import dataObjects.TechnologyStandard;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 public class View {
     private Label receiverCellBlockedCalls, senderCellBlockedCalls, locationBlockedCalls, successfullyStartedCalls, successfullyEndedCalls;
     private Label technologyName, technologyDataRate, technologyCellRadius, technologyUsersPerCell;
+    private BorderPane borderPane;
     private ArrayList<TechnologyStandard> technologies;
 
     public Scene createScene(){
@@ -34,12 +36,12 @@ public class View {
 
         layout.getChildren().add(createMenus());
 
-        BorderPane borderPane = new BorderPane();
-        borderPane.setCenter(new SimulationView(this, technologies.get(0)));
+        borderPane = new BorderPane();
         borderPane.setLeft(createLeftMenu());
 
-        layout.getChildren().add(borderPane);
+        changeTechnology(0);
 
+        layout.getChildren().add(borderPane);
 
         return new Scene(layout, 1280, 720);
     }
@@ -51,21 +53,25 @@ public class View {
         Menu technologyMenu = new Menu("Technology");
 
         ToggleGroup technologiesGroup = new ToggleGroup();
-        boolean firstOne = true;
+        int i = 0;
 
         for(TechnologyStandard technologyStandard : technologies){
             //Add every technology to the toggle group
             RadioMenuItem technology = new RadioMenuItem(technologyStandard.getTechnologyName());
-            technology.setUserData(technologyStandard.getTechnologyName());
+            technology.setUserData(i);
             technology.setToggleGroup(technologiesGroup);
 
-            if(firstOne) {
+            if(i == 0) {
                 technology.setSelected(true);
-                firstOne = false;
             }
 
             technologyMenu.getItems().add(technology);
+
+            i++;
         }
+
+        //Add controller to the toggle group
+        technologiesGroup.selectedToggleProperty().addListener(new TechnologyToggleController(this));
 
         menuBar.getMenus().add(technologyMenu);
         return  menuBar;
@@ -88,7 +94,7 @@ public class View {
         technologyCellRadius = new Label();
         technologyUsersPerCell = new Label();
 
-        leftMenu.getChildren().addAll(technologyName, technologyDataRate, technologyCellRadius, technologyUsersPerCell);
+        leftMenu.getChildren().addAll(technologyName, technologyDataRate, technologyCellRadius, technologyUsersPerCell, new Separator());
 
         receiverCellBlockedCalls = new Label("0");
         senderCellBlockedCalls = new Label("0");
@@ -143,5 +149,15 @@ public class View {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void changeTechnology(int index){
+        TechnologyStandard technology = technologies.get(index);
+        borderPane.setCenter(new SimulationView(this, technology));
+
+        technologyName.setText(technology.getTechnologyName());
+        technologyCellRadius.setText(technology.getCellRadius() + " km");
+        technologyUsersPerCell.setText(technology.getUsersPerCell() + " users");
+        technologyDataRate.setText(technology.getDataRate() + " kbps");
     }
 }
