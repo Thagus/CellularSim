@@ -5,4 +5,10 @@
         <cellRadius>35</cellRadius>
         <usersPerCell>992</usersPerCell>
     </technology>
+    <technology name="AMPS">
+        <multipleAccess>FDMA</multipleAccess>
+        <dataRate>10</dataRate>
+        <cellRadius>20</cellRadius>
+        <usersPerCell>832</usersPerCell>
+    </technology>
 </technologies>
