@@ -11,4 +11,22 @@
         <cellRadius>20</cellRadius>
         <usersPerCell>832</usersPerCell>
     </technology>
+    <technology name="TACS">
+        <multipleAccess>FDMA</multipleAccess>
+        <dataRate>8</dataRate>
+        <cellRadius>20</cellRadius>
+        <usersPerCell>1320</usersPerCell>
+    </technology>
+    <technology name="IS-95">
+        <multipleAccess>CDMA</multipleAccess>
+        <dataRate>13.3</dataRate>
+        <cellRadius>50</cellRadius>
+        <usersPerCell>15960</usersPerCell>
+    </technology>
+    <technology name="IS-136">
+        <multipleAccess>TDMA</multipleAccess>
+        <dataRate>8</dataRate>
+        <cellRadius>20</cellRadius>
+        <usersPerCell>2496</usersPerCell>
+    </technology>
 </technologies>
