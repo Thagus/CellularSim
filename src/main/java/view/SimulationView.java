@@ -45,7 +45,6 @@ public class SimulationView extends Pane{
     private ArrayList<EntitySystem> systemArrayList;
 
     private ArrayList<Profile> profiles;
-    private ArrayList<TechnologyStandard> technologies;
 
     private int WIDTH = 800, HEIGHT = 600;
 
@@ -89,7 +88,6 @@ public class SimulationView extends Pane{
         Constants.clock = new Time(time);
 
         loadProfiles();
-        loadStandardTechnologies();
         addSystems();
     }
 
@@ -300,41 +298,7 @@ public class SimulationView extends Pane{
         }
     }
 
-    private void loadStandardTechnologies(){
-        technologies = new ArrayList<>();
 
-        try {
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-
-            Document doc = dBuilder.parse(getClass().getResourceAsStream("/technologies.xml"));
-
-            doc.getDocumentElement().normalize();
-
-            NodeList technologiesList = doc.getElementsByTagName("technology");
-
-            for (int prof = 0; prof < technologiesList.getLength(); prof++) {
-                org.w3c.dom.Node nNode = technologiesList.item(prof);
-
-                if (nNode.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE) {
-                    Element eElement = (Element) nNode;
-
-                    //Create profile object
-                    TechnologyStandard technologyStandard = new TechnologyStandard(
-                            eElement.getAttribute("name"),
-                            eElement.getElementsByTagName("multipleAccess").item(0).getTextContent(),
-                            Float.parseFloat(eElement.getElementsByTagName("dataRate").item(0).getTextContent()),
-                            Float.parseFloat(eElement.getElementsByTagName("cellRadius").item(0).getTextContent()),
-                            Integer.parseInt(eElement.getElementsByTagName("usersPerCell").item(0).getTextContent())
-                    );
-
-                    technologies.add(technologyStandard);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     private ArrayList<Node> createUsers(){
         ArrayList<Node> nodes = new ArrayList<>();
