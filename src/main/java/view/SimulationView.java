@@ -327,7 +327,7 @@ public class SimulationView extends Pane{
         int profile = 0;
 
         for(int i=0; i<Constants.NUMBER_OF_USERS; i++){
-            Circle circle = new Circle(4);
+            Circle circle = new Circle((Constants.BLOCK_SIZE_PIXELS/2)-1);
             UserComponent userComponent = new UserComponent(circle, i);
             UserCommitmentComponent userCommitmentComponent = new UserCommitmentComponent();
             UserCallComponent userCallComponent = new UserCallComponent(random.nextFloat()*15);
