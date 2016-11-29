@@ -88,7 +88,7 @@ public class SimulationView extends Pane{
         long time = 0;
 
         try {
-            time = new SimpleDateFormat("HH:mm:ss").parse("23:00:00").getTime();
+            time = new SimpleDateFormat("HH:mm:ss").parse("04:00:00").getTime();
         } catch (ParseException e) {
             e.printStackTrace();
         }
