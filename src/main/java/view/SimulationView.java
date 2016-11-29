@@ -362,11 +362,6 @@ public class SimulationView extends Pane{
                 //Update clock
                 Constants.clock.setTime((Constants.clock.getTime()+(long)(delta*60000*12)));
                 System.out.println("\t" + Constants.clock);
-                System.out.println("\t\tSuccessfully started: " + Variables.successfullyStartedCalls);
-                System.out.println("\t\tSuccessfully ended: " + Variables.successfullyEndedCalls);
-                System.out.println("\t\tLocation blocked: " + Variables.locationBlockedCalls);
-                System.out.println("\t\tSender blocked: " + Variables.senderCellBlockedCalls);
-                System.out.println("\t\tReceiver blocked: " + Variables.receiverCellBlockedCalls);
 
                 view.setLabelValues(
                         Variables.successfullyStartedCalls,
