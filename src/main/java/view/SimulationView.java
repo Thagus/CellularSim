@@ -42,6 +42,7 @@ import java.util.Random;
 public class SimulationView extends Pane{
     private Engine engine;
     private View view;
+    private TechnologyStandard technology;
     private ArrayList<EntitySystem> systemArrayList;
 
     private ArrayList<Profile> profiles;
@@ -51,17 +52,25 @@ public class SimulationView extends Pane{
     private HashMap<CityBlockComponent.BlockType, ArrayList<CityBlockComponent>> cityBlocksIndex;
     private char[][] cityMap;
 
-    public SimulationView(View view){
+    public SimulationView(View view, TechnologyStandard technology){
         this.view = view;
+        this.technology = technology;
+
+        //Set constants based on technology
+        if(technology!=null){
+            Constants.CELL_CALL_LIMIT = technology.getUsersPerCell();
+            Constants.CELL_BLOCK_RADIUS = (int) ((technology.getCellRadius()*1000)/(Constants.BLOCK_SIZE_METERS));
+        }
+
         setMaxSize(WIDTH, HEIGHT);
         setMinSize(WIDTH, HEIGHT);
         setClip(new Rectangle(WIDTH, HEIGHT));
 
         initialize();
 
-        InputStream mapStrem = getClass().getResourceAsStream("/map.txt");
+        InputStream mapStream = getClass().getResourceAsStream("/map.txt");
 
-        getChildren().addAll(loadCityBlocks(mapStrem));
+        getChildren().addAll(loadCityBlocks(mapStream));
         getChildren().addAll(createCells());
         getChildren().addAll(createUsers());
 
@@ -110,8 +119,8 @@ public class SimulationView extends Pane{
     }
 
     private ArrayList<Node> loadCityBlocks(InputStream file){
-        int width = WIDTH/Constants.BLOCK_SIZE;
-        int height = HEIGHT/Constants.BLOCK_SIZE;
+        int width = WIDTH/Constants.BLOCK_SIZE_PIXELS;
+        int height = HEIGHT/Constants.BLOCK_SIZE_PIXELS;
 
         cityMap = new char[height][width];
         ArrayList<Node> nodes = new ArrayList<>();
@@ -147,7 +156,7 @@ public class SimulationView extends Pane{
         for(int i=0; i<height; i++){
             for(int j=0; j<width; j++){
                 //Create entity
-                Rectangle rectangle = new Rectangle(j*Constants.BLOCK_SIZE, i*Constants.BLOCK_SIZE, Constants.BLOCK_SIZE, Constants.BLOCK_SIZE);
+                Rectangle rectangle = new Rectangle(j*Constants.BLOCK_SIZE_PIXELS, i*Constants.BLOCK_SIZE_PIXELS, Constants.BLOCK_SIZE_PIXELS, Constants.BLOCK_SIZE_PIXELS);
                 CityBlockComponent cityBlockComponent = new CityBlockComponent(rectangle, cityMap[i][j], cityBlocksIndex);
                 Entity cityBlock = new Entity();
                 cityBlock.add(cityBlockComponent);
@@ -163,10 +172,10 @@ public class SimulationView extends Pane{
     private ArrayList<Node> createCells(){
         ArrayList<Node> nodes = new ArrayList<>();
 
-        int xBlocks = WIDTH/Constants.BLOCK_SIZE;
-        int yBlocks = HEIGHT/Constants.BLOCK_SIZE;
+        int xBlocks = WIDTH/Constants.BLOCK_SIZE_PIXELS;
+        int yBlocks = HEIGHT/Constants.BLOCK_SIZE_PIXELS;
 
-        double s = Constants.CELL_BLOCK_RADIUS *Constants.BLOCK_SIZE;
+        double s = Constants.CELL_BLOCK_RADIUS *Constants.BLOCK_SIZE_PIXELS;
         double r = Math.cos(Math.toRadians(30))*s;
         double h = Math.sin(Math.toRadians(30))*s;
 

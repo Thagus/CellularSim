@@ -4,10 +4,7 @@ import dataObjects.TechnologyStandard;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.StrokeLineCap;
@@ -38,7 +35,7 @@ public class View {
         layout.getChildren().add(createMenus());
 
         BorderPane borderPane = new BorderPane();
-        borderPane.setCenter(new SimulationView(this));
+        borderPane.setCenter(new SimulationView(this, technologies.get(0)));
         borderPane.setLeft(createLeftMenu());
 
         layout.getChildren().add(borderPane);
@@ -51,12 +48,26 @@ public class View {
         MenuBar menuBar = new MenuBar();
 
         //File menu
-        Menu menuFile = new Menu("_File");
+        Menu technologyMenu = new Menu("Technology");
 
-        MenuItem importMap = new MenuItem("Import map...");
-        menuFile.getItems().add(importMap);
+        ToggleGroup technologiesGroup = new ToggleGroup();
+        boolean firstOne = true;
 
-        menuBar.getMenus().add(menuFile);
+        for(TechnologyStandard technologyStandard : technologies){
+            //Add every technology to the toggle group
+            RadioMenuItem technology = new RadioMenuItem(technologyStandard.getTechnologyName());
+            technology.setUserData(technologyStandard.getTechnologyName());
+            technology.setToggleGroup(technologiesGroup);
+
+            if(firstOne) {
+                technology.setSelected(true);
+                firstOne = false;
+            }
+
+            technologyMenu.getItems().add(technology);
+        }
+
+        menuBar.getMenus().add(technologyMenu);
         return  menuBar;
     }
 

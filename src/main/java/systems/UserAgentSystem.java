@@ -12,8 +12,6 @@ import dataObjects.TimeRange;
 import javafx.util.Pair;
 import utils.Constants;
 
-import java.sql.Time;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -129,7 +127,7 @@ public class UserAgentSystem extends IteratingSystem {
                 UserComponent userComponent = uc.get(entity);
 
                 //Check if we satisfied the commitment
-                if(manhattanDistance(userCommitmentComponent.destination.block.getX() + Constants.BLOCK_SIZE / 2, userComponent.userPosition.getCenterX(), userCommitmentComponent.destination.block.getY() + Constants.BLOCK_SIZE / 2, userComponent.userPosition.getCenterY())==0){
+                if(manhattanDistance(userCommitmentComponent.destination.block.getX() + Constants.BLOCK_SIZE_PIXELS / 2, userComponent.userPosition.getCenterX(), userCommitmentComponent.destination.block.getY() + Constants.BLOCK_SIZE_PIXELS / 2, userComponent.userPosition.getCenterY())==0){
                     userCommitmentComponent.destination = null;
                     return;
                 }
@@ -159,7 +157,7 @@ public class UserAgentSystem extends IteratingSystem {
                     int newX = (int) (userComponent.userPosition.getCenterX() + movementX);
                     int newY = (int) (userComponent.userPosition.getCenterY() + movementY);
 
-                    int distance = manhattanDistance(userCommitmentComponent.destination.block.getX() + Constants.BLOCK_SIZE / 2, newX, userCommitmentComponent.destination.block.getY() + Constants.BLOCK_SIZE / 2, newY);
+                    int distance = manhattanDistance(userCommitmentComponent.destination.block.getX() + Constants.BLOCK_SIZE_PIXELS / 2, newX, userCommitmentComponent.destination.block.getY() + Constants.BLOCK_SIZE_PIXELS / 2, newY);
 
                     if (bestDistance == -1 || bestDistance > distance) {
                         bestDistance = distance;
