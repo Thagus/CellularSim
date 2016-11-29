@@ -56,6 +56,13 @@ public class SimulationView extends Pane{
         this.view = view;
         this.technology = technology;
 
+        //Reset variables
+        Variables.receiverCellBlockedCalls = 0;
+        Variables.senderCellBlockedCalls = 0;
+        Variables.locationBlockedCalls = 0;
+        Variables.successfullyStartedCalls = 0;
+        Variables.successfullyEndedCalls = 0;
+
         //Set constants based on technology
         if(technology!=null){
             Constants.CELL_CALL_LIMIT = technology.getUsersPerCell();
