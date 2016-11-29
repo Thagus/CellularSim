@@ -376,6 +376,10 @@ public class SimulationView extends Pane{
                         Variables.receiverCellBlockedCalls
                 );
 
+                view.updateClock(
+                        Constants.clock
+                );
+
                 for(EntitySystem es : systemArrayList){
                     es.update(delta);
                 }

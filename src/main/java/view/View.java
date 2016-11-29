@@ -11,12 +11,15 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
 import javafx.scene.shape.StrokeType;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.sql.Time;
 import java.util.ArrayList;
 
 /**
@@ -25,6 +28,7 @@ import java.util.ArrayList;
 public class View {
     private Label receiverCellBlockedCalls, senderCellBlockedCalls, locationBlockedCalls, successfullyStartedCalls, successfullyEndedCalls;
     private Label technologyName, technologyDataRate, technologyCellRadius, technologyUsersPerCell;
+    private Label clock;
     private BorderPane borderPane;
     private ArrayList<TechnologyStandard> technologies;
 
@@ -89,20 +93,48 @@ public class View {
 
         leftMenu.setPrefSize(256, 500);
 
+        GridPane technologySpecsPane = new GridPane();
+
         technologyName = new Label();
+        technologySpecsPane.add(new Label("Technology name: "), 0, 0);
+        technologySpecsPane.add(technologyName, 1, 0);
         technologyDataRate = new Label();
+        technologySpecsPane.add(new Label("Data rate: "), 0, 1);
+        technologySpecsPane.add(technologyDataRate, 1, 1);
         technologyCellRadius = new Label();
+        technologySpecsPane.add(new Label("Cell radius: "), 0, 2);
+        technologySpecsPane.add(technologyCellRadius, 1, 2);
         technologyUsersPerCell = new Label();
+        technologySpecsPane.add(new Label("Users per cell: "), 0, 3);
+        technologySpecsPane.add(technologyUsersPerCell, 1, 3);
 
-        leftMenu.getChildren().addAll(technologyName, technologyDataRate, technologyCellRadius, technologyUsersPerCell, new Separator());
+        leftMenu.getChildren().addAll(technologySpecsPane, new Separator());
 
-        receiverCellBlockedCalls = new Label("0");
-        senderCellBlockedCalls = new Label("0");
-        locationBlockedCalls = new Label("0");
+        GridPane statusGridPane = new GridPane();
+
         successfullyStartedCalls = new Label("0");
+        statusGridPane.add(new Label("Started: "), 0, 0);
+        statusGridPane.add(successfullyStartedCalls, 1, 0);
         successfullyEndedCalls = new Label("0");
+        statusGridPane.add(new Label("Ended: "), 0, 1);
+        statusGridPane.add(successfullyEndedCalls, 1, 1);
+        locationBlockedCalls = new Label("0");
+        statusGridPane.add(new Label("Location blocked: "), 0, 2);
+        statusGridPane.add(locationBlockedCalls, 1, 2);
+        senderCellBlockedCalls = new Label("0");
+        statusGridPane.add(new Label("Sender blocked: "), 0, 3);
+        statusGridPane.add(senderCellBlockedCalls, 1, 3);
+        receiverCellBlockedCalls = new Label("0");
+        statusGridPane.add(new Label("Receiver blocked: "), 0, 4);
+        statusGridPane.add(receiverCellBlockedCalls, 1, 4);
 
-        leftMenu.getChildren().addAll(successfullyStartedCalls, successfullyEndedCalls, locationBlockedCalls, senderCellBlockedCalls, receiverCellBlockedCalls);
+        leftMenu.getChildren().addAll(statusGridPane, new Separator());
+
+        Font headerFont = Font.font("Arial", FontWeight.BOLD, 14);
+        clock = new Label();
+        clock.setFont(headerFont);
+
+        leftMenu.getChildren().add(clock);
 
         return leftMenu;
     }
@@ -113,6 +145,10 @@ public class View {
         this.locationBlockedCalls.setText(locationBlockedCalls + "");
         this.senderCellBlockedCalls.setText(senderCellBlockedCalls + "");
         this.receiverCellBlockedCalls.setText(receiverCellBlockedCalls + "");
+    }
+
+    public void updateClock(Time clock){
+        this.clock.setText(clock.toString());
     }
 
     private void loadStandardTechnologies(){
