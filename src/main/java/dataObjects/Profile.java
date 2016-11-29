@@ -62,10 +62,10 @@ public class Profile {
         try {
             TimeRange timeRange = new TimeRange(new Time(sdf.parse(start).getTime()), new Time(sdf.parse(end).getTime()));
 
-            timeBlocksCount++;
-
             timeBlocks.put(timeBlocksCount, timeRange);
             schedule.put(timeBlocksCount, places);
+
+            timeBlocksCount++;
         } catch (ParseException e) {
             e.printStackTrace();
         }

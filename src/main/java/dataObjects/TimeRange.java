@@ -25,7 +25,7 @@ public class TimeRange {
     }
 
     public boolean isWithinRange(Time timeToTest){
-        return timeToTest.after(lowerBound) && timeToTest.before(upperBound);
+        return (timeToTest.after(lowerBound) || timeToTest.equals(lowerBound)) && (timeToTest.before(upperBound) || timeToTest.equals(upperBound));
     }
 
     @Override

@@ -88,7 +88,7 @@ public class SimulationView extends Pane{
         long time = 0;
 
         try {
-            time = new SimpleDateFormat("HH:mm:ss").parse("00:00:00").getTime();
+            time = new SimpleDateFormat("HH:mm:ss").parse("23:00:00").getTime();
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -360,7 +360,11 @@ public class SimulationView extends Pane{
                 //System.out.println(delta);
 
                 //Update clock
-                Constants.clock.setTime((Constants.clock.getTime()+(long)(delta*60000*12)));
+                Constants.clock.setTime((Constants.clock.getTime() + (long) (delta * 60000 * 12)));
+                if(Constants.clock.getTime()>107999000){
+                    Constants.clock.setTime(21600000);
+                }
+
                 System.out.println("\t" + Constants.clock);
 
                 view.setLabelValues(

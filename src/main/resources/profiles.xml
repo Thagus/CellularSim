@@ -56,7 +56,7 @@
             </entry>
             <entry>
                 <start>18:00:00</start>
-                <end>24:00:00</end>
+                <end>23:59:59</end>
                 <places>
                     <place>
                         <area>home</area>
@@ -139,7 +139,7 @@
             </entry>
             <entry>
                 <start>18:00:00</start>
-                <end>24:00:00</end>
+                <end>23:59:59</end>
                 <places>
                     <place>
                         <area>home</area>
@@ -210,7 +210,7 @@
             </entry>
             <entry>
                 <start>20:00:00</start>
-                <end>24:00:00</end>
+                <end>23:59:59</end>
                 <places>
                     <place>
                         <area>home</area>
@@ -281,7 +281,7 @@
             </entry>
             <entry>
                 <start>22:00:00</start>
-                <end>24:00:00</end>
+                <end>23:59:59</end>
                 <places>
                     <place>
                         <area>work</area>
@@ -356,7 +356,7 @@
             </entry>
             <entry>
                 <start>18:00:00</start>
-                <end>24:00:00</end>
+                <end>23:59:59</end>
                 <places>
                     <place>
                         <area>home</area>
@@ -427,7 +427,7 @@
             </entry>
             <entry>
                 <start>15:00:00</start>
-                <end>24:00:00</end>
+                <end>23:59:59</end>
                 <places>
                     <place>
                         <area>home</area>
@@ -516,7 +516,7 @@
             </entry>
             <entry>
                 <start>17:00:00</start>
-                <end>24:00:00</end>
+                <end>23:59:59</end>
                 <places>
                     <place>
                         <area>home</area>
@@ -587,7 +587,7 @@
             </entry>
             <entry>
                 <start>23:00:00</start>
-                <end>24:00:00</end>
+                <end>23:59:59</end>
                 <places>
                     <place>
                         <area>work</area>
@@ -654,7 +654,7 @@
             </entry>
             <entry>
                 <start>17:00:00</start>
-                <end>24:00:00</end>
+                <end>23:59:59</end>
                 <places>
                     <place>
                         <area>home</area>
@@ -725,7 +725,7 @@
             </entry>
             <entry>
                 <start>19:00:00</start>
-                <end>24:00:00</end>
+                <end>23:59:59</end>
                 <places>
                     <place>
                         <area>home</area>
