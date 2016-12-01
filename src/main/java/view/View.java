@@ -1,5 +1,6 @@
 package view;
 
+import controllers.ChangeUsersController;
 import controllers.TechnologyToggleController;
 import dataObjects.TechnologyStandard;
 import javafx.geometry.Insets;
@@ -31,10 +32,17 @@ public class View {
     private Label clock;
     private BorderPane borderPane;
     private ArrayList<TechnologyStandard> technologies;
+    private TechnologyStandard currentTechnology;
+
+    private TechnologyToggleController technologyToggleController;
+    private ChangeUsersController changeUsersController;
 
     public Scene createScene(){
         VBox layout = new VBox();
         layout.setSpacing(5);
+
+        technologyToggleController = new TechnologyToggleController(this);
+        changeUsersController = new ChangeUsersController(this);
 
         loadStandardTechnologies();
 
@@ -53,8 +61,8 @@ public class View {
     private MenuBar createMenus(){
         MenuBar menuBar = new MenuBar();
 
-        //File menu
-        Menu technologyMenu = new Menu("Technology");
+        //Technology menu
+        Menu technologyMenu = new Menu("_Technology");
 
         ToggleGroup technologiesGroup = new ToggleGroup();
         int i = 0;
@@ -75,9 +83,20 @@ public class View {
         }
 
         //Add controller to the toggle group
-        technologiesGroup.selectedToggleProperty().addListener(new TechnologyToggleController(this));
+        technologiesGroup.selectedToggleProperty().addListener(technologyToggleController);
 
         menuBar.getMenus().add(technologyMenu);
+
+
+        //Edit menu
+        Menu editMenu = new Menu("_Edit");
+
+        MenuItem changeNumUsers = new MenuItem("Number of users");
+        changeNumUsers.setOnAction(changeUsersController);
+        editMenu.getItems().add(changeNumUsers);
+
+        menuBar.getMenus().add(editMenu);
+
         return  menuBar;
     }
 
@@ -188,12 +207,21 @@ public class View {
     }
 
     public void changeTechnology(int index){
-        TechnologyStandard technology = technologies.get(index);
-        borderPane.setCenter(new SimulationView(this, technology));
+        currentTechnology = technologies.get(index);
+        borderPane.setCenter(new SimulationView(this, currentTechnology));
 
-        technologyName.setText(technology.getTechnologyName());
-        technologyCellRadius.setText(technology.getCellRadius() + " km");
-        technologyUsersPerCell.setText(technology.getUsersPerCell() + " users");
-        technologyDataRate.setText(technology.getDataRate() + " kbps");
+        technologyName.setText(currentTechnology.getTechnologyName());
+        technologyCellRadius.setText(currentTechnology.getCellRadius() + " km");
+        technologyUsersPerCell.setText(currentTechnology.getUsersPerCell() + " users");
+        technologyDataRate.setText(currentTechnology.getDataRate() + " kbps");
+    }
+
+    public void resetSimulation(){
+        borderPane.setCenter(new SimulationView(this, currentTechnology));
+
+        technologyName.setText(currentTechnology.getTechnologyName());
+        technologyCellRadius.setText(currentTechnology.getCellRadius() + " km");
+        technologyUsersPerCell.setText(currentTechnology.getUsersPerCell() + " users");
+        technologyDataRate.setText(currentTechnology.getDataRate() + " kbps");
     }
 }
