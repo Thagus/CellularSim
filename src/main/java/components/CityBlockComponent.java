@@ -8,6 +8,7 @@ import java.util.*;
 
 /**
  * Created by Thagus on 18/10/16.
+ * Component that city blocks must have, that defines their roles and colors
  */
 public class CityBlockComponent implements Component {
     public enum BlockType {

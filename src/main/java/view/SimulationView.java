@@ -374,7 +374,7 @@ public class SimulationView extends Pane{
 
                 System.out.println("\t" + Constants.clock);
 
-                view.setLabelValues(
+                view.updateVariableLabels(
                         Variables.successfullyStartedCalls,
                         Variables.successfullyEndedCalls,
                         Variables.locationBlockedCalls,

@@ -12,6 +12,7 @@ import java.util.LinkedHashMap;
 
 /**
  * Created by Thagus on 20/10/16.
+ * Represents an user profile
  */
 public class Profile {
     private static SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");

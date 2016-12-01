@@ -25,6 +25,9 @@ public class Main extends Application{
         primaryStage.show();
     }
 
+    /**
+     * Method to close the program after checking with the user
+     */
     private void closeProgram(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to quit?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
         alert.setTitle("Exit");

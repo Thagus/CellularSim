@@ -11,10 +11,11 @@ import java.util.Random;
 
 /**
  * Created by Thagus on 19/10/16.
+ * Component that holds an user profile, every user must have one
  */
 public class ProfileComponent implements Component{
-    public CityBlockComponent home, work;
-    public Profile profile;
+    public CityBlockComponent home, work;   //Selected blocks for home and work
+    public Profile profile;     //The profile
 
     public ProfileComponent(Profile profile, HashMap<CityBlockComponent.BlockType, ArrayList<CityBlockComponent>> cityBlocksIndex, Circle circleToReposition){
         this.profile = profile;

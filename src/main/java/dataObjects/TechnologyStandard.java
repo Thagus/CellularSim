@@ -2,6 +2,7 @@ package dataObjects;
 
 /**
  * Created by Thagus on 28/11/16.
+ * Represents a technology standard from the list
  */
 public class TechnologyStandard {
     private String technologyName;  //Technology name

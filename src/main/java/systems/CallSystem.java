@@ -11,6 +11,8 @@ import java.util.Random;
 
 /**
  * Created by Thagus on 18/10/16.
+ * System to simulate user calls by checking the probability of an user making a call,
+ * and requesting the creation of an actor to handle the call if it is created
  */
 public class CallSystem extends EntitySystem {
     private ImmutableArray<Entity> userEntities;

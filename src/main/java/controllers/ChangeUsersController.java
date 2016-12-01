@@ -10,6 +10,7 @@ import java.util.Optional;
 
 /**
  * Created by Thagus on 30/11/16.
+ * Controller to change the number of users in the simulation
  */
 public class ChangeUsersController implements EventHandler<ActionEvent>{
     private View view;

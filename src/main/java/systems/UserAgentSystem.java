@@ -11,19 +11,16 @@ import components.UserComponent;
 import dataObjects.TimeRange;
 import javafx.util.Pair;
 import model.Constants;
-
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
  * Created by Thagus on 19/10/16.
+ * System to establish user commitments according to their profiles
  */
 public class UserAgentSystem extends IteratingSystem {
     private ComponentMapper<UserCommitmentComponent> ucc = ComponentMapper.getFor(UserCommitmentComponent.class);
     private ComponentMapper<ProfileComponent> pc = ComponentMapper.getFor(ProfileComponent.class);
     private ComponentMapper<UserComponent> uc = ComponentMapper.getFor(UserComponent.class);
-
-    private static SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 
     private HashMap<CityBlockComponent.BlockType, ArrayList<CityBlockComponent>> cityBlocksIndex;
     private char[] possibleMovements = {'U', 'D', 'R', 'L'};
@@ -38,7 +35,6 @@ public class UserAgentSystem extends IteratingSystem {
     @Override
     protected void processEntity(Entity entity, float v) {
         UserCommitmentComponent userCommitmentComponent = ucc.get(entity);
-
 
         if(userCommitmentComponent.xCommitment==0 && userCommitmentComponent.yCommitment==0 ) {
             ProfileComponent profileComponent = pc.get(entity);

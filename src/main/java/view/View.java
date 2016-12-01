@@ -37,6 +37,10 @@ public class View {
     private TechnologyToggleController technologyToggleController;
     private ChangeUsersController changeUsersController;
 
+    /**
+     * Method to create the main scene
+     * @return the created scene
+     */
     public Scene createScene(){
         VBox layout = new VBox();
         layout.setSpacing(5);
@@ -58,6 +62,10 @@ public class View {
         return new Scene(layout, 1280, 720);
     }
 
+    /**
+     * Method to create the menus
+     * @return the created menu bar
+     */
     private MenuBar createMenus(){
         MenuBar menuBar = new MenuBar();
 
@@ -100,14 +108,18 @@ public class View {
         return  menuBar;
     }
 
+    /**
+     * Method to create the layout for the left menu
+     * @return the created layout
+     */
     private VBox createLeftMenu(){
         VBox leftMenu = new VBox();
         leftMenu.setAlignment(Pos.TOP_LEFT);
         leftMenu.setSpacing(10);
         leftMenu.setPadding(new Insets(10, 7, 5, 7));
 
-        BorderStrokeStyle boderStyle = new BorderStrokeStyle(StrokeType.INSIDE, StrokeLineJoin.MITER, StrokeLineCap.BUTT, 10, 0, null);
-        BorderStroke borderStroke = new BorderStroke(Color.LIGHTGRAY, boderStyle, CornerRadii.EMPTY, new BorderWidths(2), new Insets(2));
+        BorderStrokeStyle borderStyle = new BorderStrokeStyle(StrokeType.INSIDE, StrokeLineJoin.MITER, StrokeLineCap.BUTT, 10, 0, null);
+        BorderStroke borderStroke = new BorderStroke(Color.LIGHTGRAY, borderStyle, CornerRadii.EMPTY, new BorderWidths(2), new Insets(2));
         leftMenu.setBorder(new Border(borderStroke));
 
         leftMenu.setPrefSize(256, 500);
@@ -158,7 +170,10 @@ public class View {
         return leftMenu;
     }
 
-    public void setLabelValues(int successfullyStartedCalls, int successfullyEndedCalls, int locationBlockedCalls, int senderCellBlockedCalls, int receiverCellBlockedCalls){
+    /**
+     * Method to update the labels related to each variable in Variables
+     */
+    public void updateVariableLabels(int successfullyStartedCalls, int successfullyEndedCalls, int locationBlockedCalls, int senderCellBlockedCalls, int receiverCellBlockedCalls){
         this.successfullyStartedCalls.setText(successfullyStartedCalls + "");
         this.successfullyEndedCalls.setText(successfullyEndedCalls + "");
         this.locationBlockedCalls.setText(locationBlockedCalls + "");
@@ -166,6 +181,10 @@ public class View {
         this.receiverCellBlockedCalls.setText(receiverCellBlockedCalls + "");
     }
 
+    /**
+     * Method to update the clock label
+     * @param clock
+     */
     public void updateClock(Time clock){
         this.clock.setText(clock.toString());
     }
@@ -206,6 +225,11 @@ public class View {
         }
     }
 
+    /**
+     * Method to change the technology being used in the simulator
+     * and then reset the simulation
+     * @param index the index of the technology that will now be used
+     */
     public void changeTechnology(int index){
         currentTechnology = technologies.get(index);
         borderPane.setCenter(new SimulationView(this, currentTechnology));
@@ -216,12 +240,10 @@ public class View {
         technologyDataRate.setText(currentTechnology.getDataRate() + " kbps");
     }
 
+    /**
+     * Method to reset the simulation without changing any parameter
+     */
     public void resetSimulation(){
         borderPane.setCenter(new SimulationView(this, currentTechnology));
-
-        technologyName.setText(currentTechnology.getTechnologyName());
-        technologyCellRadius.setText(currentTechnology.getCellRadius() + " km");
-        technologyUsersPerCell.setText(currentTechnology.getUsersPerCell() + " users");
-        technologyDataRate.setText(currentTechnology.getDataRate() + " kbps");
     }
 }

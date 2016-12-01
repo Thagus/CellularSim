@@ -7,6 +7,7 @@ import view.View;
 
 /**
  * Created by Thagus on 29/11/16.
+ * Controller to change the currently used cellular technology in the simulator
  */
 public class TechnologyToggleController implements ChangeListener<Toggle> {
     private View view;

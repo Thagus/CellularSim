@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 /**
  * Created by Thagus on 24/11/16.
+ * System to update the know location of users
  */
 public class PagingSystem extends EntitySystem {
     private ImmutableArray<Entity> userEntities;

@@ -11,6 +11,7 @@ import java.util.Random;
 
 /**
  * Created by Thagus on 18/10/16.
+ * System to process the movement of users by checking the commitment they have stabilised and moving the user's circle towards the target
  */
 public class UserMovementSystem extends IteratingSystem {
     private ComponentMapper<UserComponent> uc = ComponentMapper.getFor(UserComponent.class);
