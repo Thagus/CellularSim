@@ -5,7 +5,7 @@ import akka.actor.ActorRef;
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
 import components.UserCallComponent;
-import utils.Variables;
+import model.Variables;
 
 import java.util.Random;
 

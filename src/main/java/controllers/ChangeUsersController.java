@@ -3,7 +3,7 @@ package controllers;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.TextInputDialog;
-import utils.Constants;
+import model.Constants;
 import view.View;
 
 import java.util.Optional;

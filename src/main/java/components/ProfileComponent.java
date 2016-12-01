@@ -3,7 +3,7 @@ package components;
 import com.badlogic.ashley.core.Component;
 import dataObjects.Profile;
 import javafx.scene.shape.Circle;
-import utils.Constants;
+import model.Constants;
 
 import java.util.ArrayList;
 import java.util.HashMap;

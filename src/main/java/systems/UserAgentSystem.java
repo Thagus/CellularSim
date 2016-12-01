@@ -10,7 +10,7 @@ import components.UserCommitmentComponent;
 import components.UserComponent;
 import dataObjects.TimeRange;
 import javafx.util.Pair;
-import utils.Constants;
+import model.Constants;
 
 import java.text.SimpleDateFormat;
 import java.util.*;

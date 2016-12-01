@@ -1,7 +1,7 @@
 package actors
 
 import akka.actor.{Actor, ActorRef, Props}
-import utils.{Constants, Variables}
+import model.{Constants, Variables}
 import akka.actor._
 import akka.pattern.ask
 import akka.util.Timeout

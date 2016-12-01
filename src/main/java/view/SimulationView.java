@@ -23,8 +23,8 @@ import systems.CallSystem;
 import systems.PagingSystem;
 import systems.UserAgentSystem;
 import systems.UserMovementSystem;
-import utils.Constants;
-import utils.Variables;
+import model.Constants;
+import model.Variables;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
